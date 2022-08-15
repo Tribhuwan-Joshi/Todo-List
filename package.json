@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
+        "watch": "webpack --watch",
     "build": "webpack"
   },
   "repository": {
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/Tribhuwan-Joshi/Todo-List#readme",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.7.2",

@@ -1,11 +1,14 @@
 const path = require('path')
-
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    clean: true,
+    assetModuleFilename: '[name][ext]'
+
   },
   devServer: {
     static: {
@@ -30,4 +33,14 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      hash: true,
+      title: 'My Awesome application',
+      myPageHeader: 'Hello World',
+      template: 'src/template.html',
+      filename: 'index.html' //relative to root of the application
+    })
+  ]
+
 }
