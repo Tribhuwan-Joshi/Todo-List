@@ -1,4 +1,6 @@
 import './style.css'
+import { renderTask } from './domManipulation.js';
+import { format } from 'date-fns';
 import Icon from './imgs/icon.png'
 import logo from './imgs/todologo.png'
 import home from "../src/imgs/home.png"
@@ -58,7 +60,7 @@ function showModal() {
 
     containerAdd.style.display = 'flex';
 }
-
+let priorityValue;
 function addnewTask() {
     for (const i of priority) {
         if (i.checked) {
@@ -71,7 +73,8 @@ function addnewTask() {
 
     }
     else {
-        console.log(taskName.value, taskNote.value, priorityValue, dueDate.value);
+
+        renderTask(taskName.value, taskNote.value, priorityValue, dueDate.value);
         containerAdd.style.display = 'none';
         taskName.value = '';
         taskNote.value = '';
@@ -90,3 +93,12 @@ function hideModal() {
 }
 
 
+
+const stPattysDay = new Date('2020/03/17');
+const formattedDate1 = format(stPattysDay, 'MM/dd/yyyy');
+const formattedDate2 = format(stPattysDay, 'MMMM dd, yyyy');
+
+console.log(formattedDate1);
+// => "03/17/2020"
+
+console.log(formattedDate2);
