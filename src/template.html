@@ -2,151 +2,138 @@
 <html lang="en" class="h-full">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
-    <link rel="icon" href="">
+    <link rel="icon" href="" />
 </head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
-
     <!-- header -->
-    <div class="header row-span-1 col-start-1 col-end-3  bg-blue-100   flex px-4 justify-center items-center ">
-        <div class="logo"><img class=" h-[36px] logo" src="" alt=""></div>
+    <div class="header row-span-1 col-start-1 col-end-3 bg-blue-100 flex px-4 justify-center items-center">
+        <div class="logo"><img class="h-[36px] logo" src="" alt="" /></div>
         <div class="name mx-4 text-5xl font-['system ui'] font-light tracking-wider">
-
-            Todoer <span class="mt-2 font-light text-base">~ one step at a time</span></div>
-
+            Todoer
+            <span class="mt-2 font-light text-base">~ one step at a time</span>
+        </div>
     </div>
 
     <!-- navbar -->
     <div
-        class="navbar col-span-1 row-start-2 flex-grow-0 font-[sans-serif] font-light   bg-green-300 flex flex-col pt-10 px-2 gap-7 text-xl  tracking-wide">
-        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto  bg-gray-100 px-3 py-2 rounded-md"><img
-                class="home-img h-[22px]" src="" alt="home">
-            <div class="hover:cursor-pointer  hover:text-green-800">Home</div>
+        class="navbar col-span-1 row-start-2 flex-grow-0 font-[sans-serif] font-light bg-green-300 flex flex-col pt-10 px-2 gap-7 text-xl tracking-wide">
+        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto bg-gray-100 px-3 py-2 rounded-md">
+            <img class="home-img h-[22px]" src="" alt="home" />
+            <div class="hover:cursor-pointer hover:text-green-800">Home</div>
         </div>
-        <div class="flex today-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto"><img
-                class="today-img  h-[22px] " src="" alt="today">
+        <div class="flex today-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto">
+            <img class="today-img h-[22px]" src="" alt="today" />
             <div class="hover:cursor-pointer hover:text-green-800">Today</div>
         </div>
-        <div class="flex week-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto "><img
-                class="week-img  h-[22px] " src='' alt="week">
+        <div class="flex week-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto">
+            <img class="week-img h-[22px]" src="" alt="week" />
             <div class="hover:cursor-pointer hover:text-green-800">Week</div>
         </div>
 
-        <div class="flex justify-center underline underline-offset-2  mt-6 items-center gap-4">
-            <img class="project-icon  mt-1  h-[30px]" src='' alt="project">
-            <div class="font-normal  text-2xl"> Projects</div> <img
-                class="project mr-2  hover:mb-1 mt-1  h-[26px] cursor-pointer" src='' alt="add project"
-                title="Add project">
+        <div class="flex justify-center underline underline-offset-2 mt-6 items-center gap-4">
+            <img class="project-icon mt-1 h-[30px]" src="" alt="project" />
+            <div class="font-normal text-2xl">Projects</div>
+            <img class="project mr-2 hover:mb-1 mt-1 h-[26px] cursor-pointer" src="" alt="add project"
+                title="Add project" />
         </div>
 
-
-        <div class="projects space-y-4 text-xl flex flex-col space-x-16  overflow-auto h-[270px]">
+        <div class="projects space-y-4 text-xl flex flex-col space-x-16 overflow-auto h-[270px]">
             <div class="mx-16 cursor-pointer hover:text-gray-600 w-max">Gym</div>
             <div class="cursor-pointer hover:text-gray-600 w-max">Algebra</div>
             <div class="cursor-pointer hover:text-gray-600 w-max">Calculus</div>
-            <div class="cursor-pointer hover:text-gray-600 w-max">Piano lessons</div>
+            <div class="cursor-pointer hover:text-gray-600 w-max">
+                Piano lessons
+            </div>
             <div class="cursor-pointer hover:text-gray-600 w-max">Study</div>
-
         </div>
         <button
-            class=" delete-all bg-red-500 -mt-4 w-fit py-1 px-4   text-base mx-auto tracking-wide hover:bg-red-600 active:bg-red-500  rounded-md text-white ">Delete
-            All</button>
-
+            class="delete-all bg-red-500 -mt-4 w-fit py-1 px-4 text-base mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
+            Delete All
+        </button>
     </div>
 
     <!-- main -->
     <div class="main col-start-2 row-start-2 h-[100%] flex justify-center items-center bg-red-400">
-
         <div class="content w-[85%] bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
-
-            <div class="top flex page-name justify-between">
-                <div class=" text-4xl font-semibold">Home</div>
+            <div class="top-bar flex page-name justify-between">
+                <div class="text-4xl font-semibold">Home</div>
                 <div
                     class="addTask flex w-fit px-2 py-1 rounded hover:bg-slate-300 hover:cursor-pointer gap-2 items-center">
-                    <img src="" class="add-task-icon h-[16px]" alt="">
+                    <img src="" class="add-task-icon h-[16px]" alt="" />
                     <div class="addnew text-base font-semibold">Add Task</div>
                 </div>
             </div>
-            <div class="all-projects h-full flex gap-4 flex-col">
-
+            <div class="all-projects h-full flex gap-3 flex-col">
                 <div
-                    class="container-addTask w-max md:w-[80%] mx-10 h-max p-2 hidden bg-yellow-200  flex-col gap-3 rounded-md px-3">
-
-                    <div class="naming flex justify-between gap-2"><input type="text" name="task" id="task-name"
-                            placeholder="Task *" maxlength="40"
-                            class="rounded-sm focus:outline-1 focus:outline-red-400  outline-none px-2 py-1 flex-1">
-                        <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60" required
-                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink px-2 py-1">
+                    class="container-addTask w-max md:w-[82%] mx-10 h-max p-2 hidden  bg-yellow-200 flex-col gap-3 rounded-md px-3">
+                    <div class="naming flex flex-1 justify-between gap-2">
+                        <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
+                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
+                        <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60"
+                            required
+                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink w-fit px-2 py-1" />
                     </div>
-                    <div class="priorDate justify-between flex gap-4 flex-wrap">
-                        <div class="prior flex gap-2 items-center ">
+                    <div class="priorDate justify-between flex flex-1 gap-4 flex-wrap">
+                        <div class="prior flex gap-2 items-center">
                             <div class="font-semibold mr-4 text-lg">Priority</div>
-                            <div class="choices flex flex-wrap gap-2 ">
-                                <div><input type="radio" name="priority" id="low" value="low">
-                                    <label for="low" class="text-green-700 font-semibold ">Low</label>
+                            <div class="choices flex flex-wrap gap-2">
+                                <div>
+                                    <input type="radio" name="priority" id="low" value="low" />
+                                    <label for="low" class="text-green-700 font-semibold">Low</label>
                                 </div>
-                                <div><input type="radio" name="priority" id="medium" value="medium">
-                                    <label for="medium" class="text-blue-700 font-semibold ">Medium</label>
+                                <div>
+                                    <input type="radio" name="priority" id="medium" value="medium" />
+                                    <label for="medium" class="text-blue-700 font-semibold">Medium</label>
                                 </div>
-                                <div><input type="radio" name="priority" id="high" value="high">
-                                    <label for="high" class="text-red-700 font-semibold ">High</label>
+                                <div>
+                                    <input type="radio" name="priority" id="high" value="high" />
+                                    <label for="high" class="text-red-700 font-semibold">High</label>
                                 </div>
-
                             </div>
-
                         </div>
-                        <div class="date"><label for="dueDate" class=" text-lg  font-semibold mr-4">Due</label>
-                            <input type="date" name="" id="due-date" class="rounded-md px-2">
+                        <div class="date">
+                            <label for="dueDate" class="text-lg font-semibold mr-4">Due</label>
+                            <input type="date" name="" id="due-date" class="rounded-md px-2" />
                         </div>
 
                         <div class="buttons flex gap-2">
                             <button
-                                class="bg-green-600  add-btn rounded-md px-4 py-1 hover:bg-green-700 active:bg-green-600 text-white ">Add</button>
+                                class="bg-green-600 add-btn rounded-md px-4 py-1 hover:bg-green-700 active:bg-green-600 text-white">
+                                Add
+                            </button>
                             <button
-                                class="bg-red-500 cancel-btn rounded-md px-4 py-1 hover:bg-red-600 active:bg-red-500 text-white">Cancel</button>
+                                class="bg-red-500 cancel-btn rounded-md px-4 py-1 hover:bg-red-600 active:bg-red-500 text-white">
+                                Cancel
+                            </button>
                         </div>
-
-
-
-
                     </div>
-
                 </div>
 
-                <div class="task w-[90%] gap-4 mt-3 flex items-center mx-2 ">
-
-                    <div class="checkbox"> <input type="checkbox" name="done" id=""></div>
+                <div class="task w-[90%] gap-4 mt-3 flex items-center mx-2">
+                    <div class="checkbox">
+                        <input type="checkbox" name="done" id="" />
+                    </div>
                     <div
-                        class="task w-full h-full p-2 text-lg flex   border-l-[6px] border-green-600   bg-yellow-100 justify-between rounded-md cursor-pointer ">
-
+                        class="task-info w-full h-full p-2 text-lg flex border-l-[6px] border-[rgb(255,0,0)] bg-yellow-100 justify-between rounded-md cursor-pointer">
                         <div class="task-name">Play Minecraft</div>
 
-                        <div class="notes text-sm flex w-max items-center">Make a new server in minecraft</div>
+                        <div class="notes text-sm flex w-max items-center">
+                            Make a new server in minecraft
+                        </div>
 
                         <div class="dueData text-sm flex items-center">12 Dec 2012</div>
-
                     </div>
-                   
-                        <img src="" alt="edit" class="h-[20px] edit-btn hover:cursor-pointer hover:mb-1">
 
-
-                    
-
-
+                    <img src="" alt="edit" class="h-[20px] edit-btn hover:cursor-pointer hover:mb-1" />
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
-
-
 </body>
 
 </html>
