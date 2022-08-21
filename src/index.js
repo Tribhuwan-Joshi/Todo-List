@@ -18,6 +18,7 @@ const projectImg = document.querySelector('.project');
 const editBtn = document.querySelector('.edit-btn');
 const projectLogo = document.querySelector('.project-icon');
 const addtaskAdd = document.querySelector('.add-task-icon');
+const pages = document.querySelectorAll('[class*="-index"]');
 
 const linkIcon = document.querySelector('link[rel="icon"]')
 linkIcon.href = Icon
@@ -31,6 +32,17 @@ projectLogo.src = projectIcon;
 editBtn.src = edit;
 addtaskAdd.src = addTaskIcon;
 
+// navbar indexs ( home , today , week ) click events
+pages.forEach(page => {
+    page.addEventListener('click', () => {
+        pages.forEach(page => {
+            page.classList.remove('bg-gray-100');
+        }
+        )
+        page.classList.add('bg-gray-100');
+    }
+    )
+})
 
 
 // addTask
@@ -44,6 +56,7 @@ const taskName = document.querySelector('.container-addTask input#task-name');
 const taskNote = document.querySelector('.container-addTask input#task-note');
 const priority = document.querySelectorAll('.container-addTask input[name="priority"]');
 const dueDate = document.querySelector('.container-addTask input#due-date');
+console.log(dueDate);
 
 
 
@@ -68,13 +81,17 @@ function addnewTask() {
         }
     }
 
-    if (!(taskName.value && taskNote.value && priorityValue && dueDate.value)) {
-        alert('Please fill all fields');
+    if (!(taskName.value && priorityValue && dueDate.value)) {
+        alert('Please fill required fields');
 
     }
     else {
+        let taskDate = new Date(dueDate.value);
 
-        renderTask(taskName.value, taskNote.value, priorityValue, dueDate.value);
+        let formattedDate = format(taskDate, 'dd MMM yyyy');
+
+        renderTask(taskName.value, taskNote.value, priorityValue, formattedDate);
+
         containerAdd.style.display = 'none';
         taskName.value = '';
         taskNote.value = '';
@@ -94,11 +111,12 @@ function hideModal() {
 
 
 
-const stPattysDay = new Date('2020/03/17');
-const formattedDate1 = format(stPattysDay, 'MM/dd/yyyy');
-const formattedDate2 = format(stPattysDay, 'MMMM dd, yyyy');
+// const stPattysDay = new Date('2020-03-17');
 
-console.log(formattedDate1);
-// => "03/17/2020"
+// const formattedDate2 = format(stPattysDay, 'dd MMM yyyy');
 
-console.log(formattedDate2);
+
+// // console.log(formattedDate1);
+// // => "03/17/2020"
+
+// console.log(formattedDate2);
