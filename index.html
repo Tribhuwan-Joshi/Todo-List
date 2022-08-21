@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todoer</title>
     <link rel="icon" href="">
-<script defer src="bundle.js?1980c92577d80cce2c36"></script></head>
+<script defer src="bundle.js?0146a41f204e6b3775e9"></script></head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
 
@@ -22,16 +22,16 @@
 
     <!-- navbar -->
     <div
-        class=" col-span-1 row-start-2 flex-grow-0 font-[sans-serif] font-light   bg-green-300 flex flex-col pt-10 px-2 gap-7 text-xl  tracking-wide">
-        <div class="flex gap-4 justify-center items-center w-max mx-auto  bg-gray-100 px-3 py-2 rounded-md"><img
+        class="navbar col-span-1 row-start-2 flex-grow-0 font-[sans-serif] font-light   bg-green-300 flex flex-col pt-10 px-2 gap-7 text-xl  tracking-wide">
+        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto  bg-gray-100 px-3 py-2 rounded-md"><img
                 class="home-img h-[22px]" src="" alt="home">
             <div class="hover:cursor-pointer  hover:text-green-800">Home</div>
         </div>
-        <div class="flex gap-4 justify-center items-center  p-2 rounded-md w-max h-max mx-auto"><img
+        <div class="flex today-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto"><img
                 class="today-img  h-[22px] " src="" alt="today">
             <div class="hover:cursor-pointer hover:text-green-800">Today</div>
         </div>
-        <div class="flex gap-4 justify-center items-center  p-2 rounded-md w-max h-max mx-auto "><img
+        <div class="flex week-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto "><img
                 class="week-img  h-[22px] " src='' alt="week">
             <div class="hover:cursor-pointer hover:text-green-800">Week</div>
         </div>
@@ -74,13 +74,13 @@
             <div class="all-projects h-full flex gap-4 flex-col">
 
                 <div
-                    class="container-addTask w-[80%] mx-10 h-max p-2 hidden bg-yellow-200  flex-col gap-3 rounded-md px-3">
+                    class="container-addTask w-max md:w-[80%] mx-10 h-max p-2 hidden bg-yellow-200  flex-col gap-3 rounded-md px-3">
 
                     <div class="naming flex justify-between gap-2"><input type="text" name="task" id="task-name"
-                            placeholder="Task" maxlength="40"
+                            placeholder="Task *" maxlength="40"
                             class="rounded-sm focus:outline-1 focus:outline-red-400  outline-none px-2 py-1 flex-1">
-                        <input type="text" name="Note" id="task-note" placeholder="Note" maxlength="60" required
-                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none flex-grow-[2] flex-shrink-[2] px-2 py-1">
+                        <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60" required
+                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink px-2 py-1">
                     </div>
                     <div class="priorDate justify-between flex gap-4 flex-wrap">
                         <div class="prior flex gap-2 items-center ">
@@ -90,10 +90,10 @@
                                     <label for="low" class="text-green-700 font-semibold ">Low</label>
                                 </div>
                                 <div><input type="radio" name="priority" id="medium" value="medium">
-                                    <label for="low" class="text-blue-700 font-semibold ">Medium</label>
+                                    <label for="medium" class="text-blue-700 font-semibold ">Medium</label>
                                 </div>
                                 <div><input type="radio" name="priority" id="high" value="high">
-                                    <label for="low" class="text-red-700 font-semibold ">High</label>
+                                    <label for="high" class="text-red-700 font-semibold ">High</label>
                                 </div>
 
                             </div>
