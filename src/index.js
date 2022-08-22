@@ -10,6 +10,7 @@ import add from "../src/imgs/add.png"
 import edit from "../src/imgs/edit.png"
 import projectIcon from './imgs/project.png'
 import addTaskIcon from './imgs/add2.png';
+import githubIcon from './imgs/github.png'
 
 // import task class
 import { Task } from './tasks.js';
@@ -22,7 +23,16 @@ const editBtn = document.querySelector('.edit-btn');
 const projectLogo = document.querySelector('.project-icon');
 const addtaskAdd = document.querySelector('.add-task-icon');
 const pages = document.querySelectorAll('[class*="-index"]');
-
+const githubImg = document.querySelector('.github-icon');
+const githubName = document.querySelector('.github-name');
+githubImg.addEventListener('mouseover', () => {
+    githubName.style.display = 'block';
+});
+// hide githubName 
+githubImg.addEventListener('mouseout', () => {
+    githubName.style.display = 'none';
+}
+);
 const linkIcon = document.querySelector('link[rel="icon"]')
 linkIcon.href = Icon
 const Logo = document.querySelector('div img.logo');
@@ -34,6 +44,7 @@ projectImg.src = add;
 projectLogo.src = projectIcon;
 editBtn.src = edit;
 addtaskAdd.src = addTaskIcon;
+githubImg.src = githubIcon;
 
 // navbar indexs ( home , today , week ) click events
 pages.forEach(page => {

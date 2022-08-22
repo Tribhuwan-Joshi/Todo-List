@@ -61,6 +61,7 @@ function renderTask(taskName, taskNote, priorityValue, dueDate,uniqueId) {
     // add edit-icon src to task-info
     newTask.querySelector('.edit-btn').src = editIcon;
     tasks.push(newTask);
+    console.log(tasks);
     addEventListeners(newTask);
    // add to allprojects
     allProjects.appendChild(newTask);
