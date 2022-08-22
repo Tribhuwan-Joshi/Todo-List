@@ -11,6 +11,9 @@ import edit from "../src/imgs/edit.png"
 import projectIcon from './imgs/project.png'
 import addTaskIcon from './imgs/add2.png';
 
+// import task class
+import { Task } from './tasks.js';
+
 const homeImg = document.querySelector('.home-img');
 const todayImg = document.querySelector('.today-img');
 const weekImg = document.querySelector('.week-img');
@@ -56,10 +59,10 @@ const taskName = document.querySelector('.container-addTask input#task-name');
 const taskNote = document.querySelector('.container-addTask input#task-note');
 const priority = document.querySelectorAll('.container-addTask input[name="priority"]');
 const dueDate = document.querySelector('.container-addTask input#due-date');
-console.log(dueDate);
 
 
 
+let uniqueId = 0;
 // cancel button
 const cancelBtn = document.querySelector('.container-addTask .cancel-btn');
 cancelBtn.addEventListener('click', hideModal);
@@ -90,7 +93,9 @@ function addnewTask() {
 
         let formattedDate = format(taskDate, 'dd MMM yyyy');
 
-        renderTask(taskName.value, taskNote.value, priorityValue, formattedDate);
+        renderTask(taskName.value, taskNote.value, priorityValue, formattedDate, uniqueId);
+        const newTask = new Task(taskName.value, taskNote.value, priorityValue, taskDate,uniqueId++);
+   
 
         containerAdd.style.display = 'none';
         taskName.value = '';

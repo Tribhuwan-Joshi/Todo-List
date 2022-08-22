@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
     <link rel="icon" href="" />
-<script defer src="bundle.js?b392e3fc51679eff4c27"></script></head>
+<script defer src="bundle.js?fdd91dca0d452b96b1bd"></script></head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
     <!-- header -->
@@ -58,7 +58,7 @@
     </div>
 
     <!-- main -->
-    <div class="main col-start-2 row-start-2 h-[100%] flex justify-center items-center bg-red-400">
+    <div class="main col-start-2 row-start-2 h-[92vh] flex justify-center items-center bg-red-400">
         <div class="content w-[85%] bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
             <div class="top-bar flex page-name justify-between">
                 <div class="text-4xl font-semibold">Home</div>
@@ -68,15 +68,15 @@
                     <div class="addnew text-base font-semibold">Add Task</div>
                 </div>
             </div>
-            <div class="all-projects h-full flex gap-3 flex-col">
+            <div class="all-projects   gap-3 flex-col overflow-y-auto overflow-x-hidden">
                 <div
-                    class="container-addTask w-max md:w-[82%] mx-10 h-max p-2 hidden  bg-yellow-200 flex-col gap-3 rounded-md px-3">
-                    <div class="naming flex flex-1 justify-between gap-2">
+                    class="container-addTask w-auto md:w-[82%] mx-10 h-max p-2 hidden  bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
+                    <div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
                             class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
                         <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60"
                             required
-                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink w-fit px-2 py-1" />
+                            class="rounded-sm mt-2 md:mt-0 focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink w-fit px-2 py-1" />
                     </div>
                     <div class="priorDate justify-between flex flex-1 gap-4 flex-wrap">
                         <div class="prior flex gap-2 items-center">
@@ -114,9 +114,10 @@
                     </div>
                 </div>
 
-                <div class="task w-[90%] gap-4 mt-3 flex items-center mx-2">
+               
+                <div class="task w-[90%] gap-6 mt-3 flex items-center mx-2">
                     <div class="checkbox">
-                        <input type="checkbox" name="done" id="" />
+                        <input type="checkbox" name="done" data-id="" />
                     </div>
                     <div
                         class="task-info w-full h-full p-2 text-lg flex border-l-[6px] border-[rgb(255,0,0)] bg-yellow-100 justify-between rounded-md cursor-pointer">
@@ -129,7 +130,7 @@
                         <div class="dueData text-sm flex items-center">12 Dec 2012</div>
                     </div>
 
-                    <img src="" alt="edit" class="h-[20px] edit-btn hover:cursor-pointer hover:mb-1" />
+                    <img src="" alt="edit" data-id ="-1" class="h-[20px] edit-btn hover:cursor-pointer hover:mb-1" />
                 </div>
             </div>
         </div>
