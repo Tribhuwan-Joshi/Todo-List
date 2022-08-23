@@ -1,5 +1,10 @@
-import { format } from 'date-fns';
 import editIcon from './imgs/edit.png';
+
+// show new form 
+const containerAdd = document.querySelector("container-addTaskForm");
+
+
+
 const allProjects = document.querySelector('.all-projects');
 let tasks = [];
 function addEventListeners() {
@@ -12,7 +17,7 @@ function addEventListeners() {
                 allProjects.removeChild(task);
                 let id = checkbox.getAttribute('data-id');
                 tasks = tasks.filter(task => task.id !== id);
-                console.log(tasks);
+                
             }
            
         }
@@ -21,14 +26,14 @@ function addEventListeners() {
     );
     // add event listener to edit-btn
     const editBtn = document.querySelectorAll('.edit-btn');
-    editBtn.forEach(editBtn => {
-        editBtn.addEventListener('click', () => {
-            const task = editBtn.parentElement.parentElement;
-            task.classList.toggle('bg-gray-100');
-        }
-        );
-    }
-    );
+    // editBtn.forEach(editBtn => {
+    //     editBtn.addEventListener('click', () => {
+    //         const task = editBtn.parentElement.parentElement;
+    //         task.classList.toggle('bg-gray-100');
+    //     }
+    //     );
+    // }
+    // );
 }
 
 function renderTask(taskName, taskNote, priorityValue, dueDate,uniqueId) {
@@ -58,13 +63,17 @@ function renderTask(taskName, taskNote, priorityValue, dueDate,uniqueId) {
                         `
     // add priority color css to task-info
     newTask.querySelector('.task-info').style.borderColor = priorityColor;
+    allProjects.appendChild(newTask);
     // add edit-icon src to task-info
+    // let editBtn = document.querySelectorAll('.edit-btn');
+    // editBtn = editBtn[editBtn.length -1]
+    // editBtn.src = editIcon;
     newTask.querySelector('.edit-btn').src = editIcon;
     tasks.push(newTask);
     console.log(tasks);
     addEventListeners(newTask);
    // add to allprojects
-    allProjects.appendChild(newTask);
+    
     
 
 }
