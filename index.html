@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
     <link rel="icon" href="" />
-<script defer src="bundle.js?5e37425017ec686e9f4d"></script></head>
+<script defer src="bundle.js?367a6e56370e3b5c88c5"></script></head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
     <!-- header -->
     <div class="header row-span-1 col-start-1 col-end-3 bg-blue-100 flex px-4 justify-center items-center">
-        <div class="github-wrapper flex gap-2 absolute left-[6%] "> <a href="https://github.com/Tribhuwan-Joshi" traget="_blank"><img src=""  alt=""
+        <div class="github-wrapper flex gap-2 absolute left-[6%] "> <a href="https://github.com/Tribhuwan-Joshi" ><img src=""  alt=""
                 class="github-icon w-[24px] h-auto hover:cursor-pointer "></a> <div class="github-name hidden text-sm">Made by Tjsm with ❤️</div> </div>
 
-        <div class="logo"><img class="h-[36px] logo" src="" alt="" /></div>
+        <div class="logo"><img class="h-[36px] tick-logo" src="" alt="" /></div>
         <div class="name mx-4 text-5xl font-['system ui'] font-light tracking-wider">
             Todoer
             <span class="mt-2 font-light text-base">~ one step at a time</span>
@@ -41,7 +41,7 @@
         <div class="flex justify-center underline underline-offset-2 mt-6 items-center gap-4">
             <img class="project-icon mt-1 h-[30px]" src="" alt="project" />
             <div class="font-normal text-2xl">Projects</div>
-            <img class="project mr-2 hover:mb-1 mt-1 h-[26px] cursor-pointer" src="" alt="add project"
+            <img class="project-add-img mr-2 hover:mb-1 mt-1 h-[26px] cursor-pointer" src="" alt="add project"
                 title="Add project" />
         </div>
 
@@ -66,7 +66,7 @@
             <div class="top-bar flex page-name justify-between">
                 <div class="text-4xl font-semibold">Home</div>
                 <div
-                    class="addTask flex w-fit px-2 py-1 rounded hover:bg-slate-300 hover:cursor-pointer gap-2 items-center">
+                    class="addTask-btn flex w-fit px-2 py-1 rounded hover:bg-slate-300 hover:cursor-pointer gap-2 items-center">
                     <img src="" class="add-task-icon h-[16px]" alt="" />
                     <div class="addnew text-base font-semibold">Add Task</div>
                 </div>
@@ -118,23 +118,7 @@
                 </div>
 
 
-                <div class="task w-[90%] gap-6 mt-3 flex items-center mx-2">
-                    <div class="checkbox">
-                        <input type="checkbox" name="done" data-id="" />
-                    </div>
-                    <div
-                        class="task-info w-full h-full p-2 text-lg flex border-l-[6px] border-[rgb(255,0,0)] bg-yellow-100 justify-between rounded-md cursor-pointer">
-                        <div class="task-name">Play Minecraft</div>
-
-                        <div class="notes text-sm flex w-max items-center">
-                            Make a new server in minecraft
-                        </div>
-
-                        <div class="dueData text-sm flex items-center">12 Dec 2012</div>
-                    </div>
-
-                    <img src="" alt="edit" data-id="-1" class="h-[20px] edit-btn hover:cursor-pointer hover:mb-1" />
-                </div>
+                
             </div>
         </div>
     </div>
