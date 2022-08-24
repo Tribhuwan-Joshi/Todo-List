@@ -76,16 +76,8 @@ pages.forEach((page) => {
 
 
 
-
-
-
-
-
-
-
-
 /* Main { header and Container} */
-import editSrc from "../src/imgs/edit.png";
+// import editSrc from "../src/imgs/edit.png";
 import taskAddIcon from "../src/imgs/taskAdd.png";
 const addTaskDiv = document.querySelector(".addTask-btn");
 const addTaskIcon = document.querySelector("img.add-task-icon")
@@ -95,9 +87,7 @@ addTaskDiv.addEventListener("click", showAddForm);
 // container Form
 
 const containerAdd = document.querySelector(".container-addTask");
-function showAddForm() {
-    containerAdd.style.display = "flex";
-}
+
 const taskName = document.querySelector(".container-addTask input#task-name");
 const taskNote = document.querySelector(".container-addTask input#task-note");
 const priority = document.querySelectorAll(
@@ -112,7 +102,7 @@ cancelBtn.addEventListener("click", hideTaskForm);
 
 
 // append task
-
+const allTasks = [];
 const projects = document.querySelector(".all-projects");
 
 let uniqueId = 0;
@@ -131,31 +121,34 @@ function addnewTask() {
         let taskDate = new Date(dueDate.value);
 
         let formattedDate = format(taskDate, "dd MMM yyyy");
-
-        renderTask(
+        let myTask = new Task(
             taskName.value,
             taskNote.value,
             priorityValue,
             formattedDate,
-            uniqueId
-        );
-        const newTask = new Task(
-            taskName.value,
-            taskNote.value,
-            priorityValue,
-            taskDate,
             uniqueId++
         );
-
-        containerAdd.style.display = "none";
-        taskName.value = "";
-        taskNote.value = "";
-        dueDate.value = "";
+        allTasks.push(myTask);
+        renderTask(
+            allTasks
+        );
+        console.log(allTasks);
+        console.trace("calling hideTaskForm");
+        hideTaskForm();
+      
+        
     }
 }
-
+function showAddForm() {
+    console.trace("Add form is display now");
+  
+    containerAdd.classList.remove('hidden');
+    console.log(containerAdd);
+}
 function hideTaskForm() {
-    containerAdd.style.display = "none";
+    console.trace("Add form is hide now");
+    containerAdd.classList.add('hidden');
+    console.log(containerAdd);
     taskName.value = "";
     taskNote.value = "";
     dueDate.value = "";
