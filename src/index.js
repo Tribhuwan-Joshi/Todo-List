@@ -4,7 +4,7 @@ import "./style.css";
 import { renderTask } from "./domManipulation.js";
 
 // import classes
-import {Task} from './task'
+import { Task } from './task'
 
 // link Icon
 import Icon from "./imgs/icon.png";
@@ -86,7 +86,7 @@ addTaskDiv.addEventListener("click", showAddForm);
 
 // container Form
 
-const containerAdd = document.querySelector(".container-addTask");
+
 
 const taskName = document.querySelector(".container-addTask input#task-name");
 const taskNote = document.querySelector(".container-addTask input#task-note");
@@ -109,12 +109,18 @@ let uniqueId = 0;
 let priorityValue;
 
 function addnewTask() {
+    const taskName = document.querySelector(".container-addTask input#task-name");
+    const taskNote = document.querySelector(".container-addTask input#task-note");
+    const priority = document.querySelectorAll(
+        '.container-addTask input[name="priority"]'
+    );
+    const dueDate = document.querySelector(".container-addTask input#due-date");
     for (const i of priority) {
         if (i.checked) {
             priorityValue = i.value;
         }
     }
-    
+
     if (!(taskName.value && priorityValue && dueDate.value)) {
         alert("Please fill required fields");
     } else {
@@ -129,26 +135,53 @@ function addnewTask() {
             uniqueId++
         );
         allTasks.push(myTask);
-        renderTask(
-            allTasks
-        );
+
         console.log(allTasks);
         console.trace("calling hideTaskForm");
         hideTaskForm();
-      
-        
+        renderTask(
+            allTasks
+        );
+
     }
 }
 function showAddForm() {
+    const containerAdd = document.querySelector(".container-addTask");
+    containerAdd.classList.remove("hidden");
+    containerAdd.classList.add("flex");
+
     console.trace("Add form is display now");
-  
-    containerAdd.classList.remove('hidden');
     console.log(containerAdd);
+
+
+    
+    const addBtn = document.querySelector(".container-addTask .add-btn");
+    addBtn.addEventListener("click", addnewTask);
+    const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
+    cancelBtn.addEventListener("click", hideTaskForm);
+    taskName.value = "";
+    taskNote.value = "";
+    dueDate.value = "";
+
+
 }
 function hideTaskForm() {
-    console.trace("Add form is hide now");
-    containerAdd.classList.add('hidden');
+    const containerAdd = document.querySelector(".container-addTask");
+    containerAdd.classList.remove("flex");
+    containerAdd.classList.add("hidden");
+    const addBtn = document.querySelector(".container-addTask .add-btn");
+    addBtn.addEventListener("click", addnewTask);
+    const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
+    cancelBtn.addEventListener("click", hideTaskForm);
+    console.trace("Add form is hidden now");
     console.log(containerAdd);
+    const taskName = document.querySelector(".container-addTask input#task-name");
+    const taskNote = document.querySelector(".container-addTask input#task-note");
+    const priority = document.querySelectorAll(
+        '.container-addTask input[name="priority"]'
+    );
+    const dueDate = document.querySelector(".container-addTask input#due-date");
+
     taskName.value = "";
     taskNote.value = "";
     dueDate.value = "";

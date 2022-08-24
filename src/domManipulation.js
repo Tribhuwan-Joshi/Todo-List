@@ -42,7 +42,7 @@ function renderTask(allTasks) {
 
     //add form to allProjects div
     allProjects.innerHTML = `<div
-                    class="container-addTask   w-auto md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
+                    class="container-addTask   hidden w-auto md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
                     <div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
                             class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
@@ -85,6 +85,7 @@ function renderTask(allTasks) {
                         </div>
                     </div>
                 </div>`;
+    console.log("add form with hidden class");
     
     // add all tasks from allTasks array to allProjects div
     allTasks.forEach(task => {
