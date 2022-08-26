@@ -17,23 +17,23 @@ const allProjects = document.querySelector('.all-projects');
 //                 allProjects.removeChild(task);
 //                 let id = checkbox.getAttribute('data-id');
 //                 tasks = tasks.filter(task => task.id !== id);
-                
+
 //             }
-           
+
 //         }
 //         );
 //     }
 //     );
-    // add event listener to edit-btn
-    const editBtn = document.querySelectorAll('.edit-btn');
-    // editBtn.forEach(editBtn => {
-    //     editBtn.addEventListener('click', () => {
-    //         const task = editBtn.parentElement.parentElement;
-    //         task.classList.toggle('bg-gray-100');
-    //     }
-    //     );
-    // }
-    // );
+// add event listener to edit-btn
+const editBtn = document.querySelectorAll('.edit-btn');
+// editBtn.forEach(editBtn => {
+//     editBtn.addEventListener('click', () => {
+//         const task = editBtn.parentElement.parentElement;
+//         task.classList.toggle('bg-gray-100');
+//     }
+//     );
+// }
+// );
 // }
 
 function renderTask(allTasks) {
@@ -70,7 +70,7 @@ function renderTask(allTasks) {
                         </div>
                         <div class="date">
                             <label for="dueDate" class="text-lg font-semibold mr-4">Due</label>
-                            <input type="date" name="" id="due-date" class="rounded-md px-2" />
+                            <input type="date" name="" id="due-date" class="rounded-md px-2"/>
                         </div>
 
                         <div class="buttons flex gap-2">
@@ -86,11 +86,11 @@ function renderTask(allTasks) {
                     </div>
                 </div>`;
     console.log("add form with hidden class");
-    
+
     // add all tasks from allTasks array to allProjects div
     allTasks.forEach(task => {
         const taskElement = document.createElement('div');
-        taskElement.classList.add('task', 'w-[90%]', 'flex-row','md:flex-col' ,'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
+        taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
         taskElement.style.gap = "20px";
         let priorityColor;
 
@@ -103,7 +103,7 @@ function renderTask(allTasks) {
         else {
             priorityColor = 'green';
         }
-        taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done" id=""></div>
+        taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done"></div>
                     <div
                         class="task-info w-full  h-full p-2 text-lg flex   border-l-[6px]    bg-yellow-100 justify-between rounded-md cursor-pointer ">
                         <div class="task-name }">${task.taskName}</div>
@@ -118,9 +118,9 @@ function renderTask(allTasks) {
         allProjects.appendChild(taskElement);
     }
     );
-        
-    
-    
+
+
+
 
 }
 

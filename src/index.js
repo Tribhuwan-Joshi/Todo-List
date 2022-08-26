@@ -84,7 +84,14 @@ const addTaskIcon = document.querySelector("img.add-task-icon")
 addTaskIcon.src = taskAddIcon;
 addTaskDiv.addEventListener("click", showAddForm);
 
-// container Form
+// tasks arr
+let allTasks = [];
+
+// checkboxes
+
+
+
+
 
 
 
@@ -99,10 +106,29 @@ addBtn.addEventListener("click", addnewTask);
 const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
 cancelBtn.addEventListener("click", hideTaskForm);
 
+const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
+console.log(checkboxes);
+checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
 
+
+        let data_id = checkbox.getAttribute("data-id");
+        console.log("checked ", data_id);
+        console.log(allTasks);
+        // remove checked task
+        allTasks = allTasks.filter((task) => {
+            return task.uniqueId != data_id;
+        });
+        console.log("after checking", allTasks);
+        renderTask(allTasks);
+
+    }
+    );
+}
+);
 
 // append task
-const allTasks = [];
+
 const projects = document.querySelector(".all-projects");
 
 let uniqueId = 0;
@@ -139,11 +165,38 @@ function addnewTask() {
         console.log(allTasks);
         console.trace("calling hideTaskForm");
         hideTaskForm();
+
         renderTask(
             allTasks
         );
+ 
+    
 
+       const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
+        console.log(checkboxes);
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("click", () => {
+
+
+                let data_id = checkbox.getAttribute("data-id");
+                console.log("checked ", data_id);
+                console.log(allTasks);
+                // remove checked task
+                allTasks = allTasks.filter((task) => {
+                    return task.uniqueId != data_id;
+                });
+                console.log("after checking", allTasks);
+                renderTask(
+                    allTasks
+                );
+
+            }
+            );
+        }
+        );
+      
     }
+
 }
 function showAddForm() {
     const containerAdd = document.querySelector(".container-addTask");
@@ -154,7 +207,7 @@ function showAddForm() {
     console.log(containerAdd);
 
 
-    
+
     const addBtn = document.querySelector(".container-addTask .add-btn");
     addBtn.addEventListener("click", addnewTask);
     const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
