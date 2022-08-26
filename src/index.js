@@ -107,28 +107,6 @@ const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
 cancelBtn.addEventListener("click", hideTaskForm);
 
 const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
-console.log(checkboxes);
-checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("click", () => {
-
-
-        let data_id = checkbox.getAttribute("data-id");
-        console.log("checked ", data_id);
-        console.log(allTasks);
-        // remove checked task
-        allTasks = allTasks.filter((task) => {
-            return task.uniqueId != data_id;
-        });
-        console.log("after checking", allTasks);
-        renderTask(allTasks);
-
-    }
-    );
-}
-);
-
-// append task
-
 const projects = document.querySelector(".all-projects");
 
 let uniqueId = 0;
@@ -161,9 +139,8 @@ function addnewTask() {
             uniqueId++
         );
         allTasks.push(myTask);
-
-        console.log(allTasks);
-        console.trace("calling hideTaskForm");
+console.log("after adding", allTasks);
+        
         hideTaskForm();
 
         renderTask(
@@ -173,23 +150,22 @@ function addnewTask() {
     
 
        const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
-        console.log(checkboxes);
+        
         checkboxes.forEach((checkbox) => {
             checkbox.addEventListener("click", () => {
 
 
                 let data_id = checkbox.getAttribute("data-id");
-                console.log("checked ", data_id);
-                console.log(allTasks);
+                
+                
                 // remove checked task
                 allTasks = allTasks.filter((task) => {
                     return task.uniqueId != data_id;
                 });
-                console.log("after checking", allTasks);
-                renderTask(
-                    allTasks
-                );
-
+                
+                let element = document.querySelector(`div[data-id="${data_id}"]`);
+                element.parentNode.removeChild(element);
+                console.log("after checking alltasks", allTasks);
             }
             );
         }
@@ -202,11 +178,7 @@ function showAddForm() {
     const containerAdd = document.querySelector(".container-addTask");
     containerAdd.classList.remove("hidden");
     containerAdd.classList.add("flex");
-
-    console.trace("Add form is display now");
-    console.log(containerAdd);
-
-
+    containerAdd.setAttribute("autofocus", "autofocus");
 
     const addBtn = document.querySelector(".container-addTask .add-btn");
     addBtn.addEventListener("click", addnewTask);
@@ -226,8 +198,7 @@ function hideTaskForm() {
     addBtn.addEventListener("click", addnewTask);
     const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
     cancelBtn.addEventListener("click", hideTaskForm);
-    console.trace("Add form is hidden now");
-    console.log(containerAdd);
+ 
     const taskName = document.querySelector(".container-addTask input#task-name");
     const taskNote = document.querySelector(".container-addTask input#task-note");
     const priority = document.querySelectorAll(

@@ -85,13 +85,13 @@ function renderTask(allTasks) {
                         </div>
                     </div>
                 </div>`;
-    console.log("add form with hidden class");
 
     // add all tasks from allTasks array to allProjects div
     allTasks.forEach(task => {
         const taskElement = document.createElement('div');
         taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
         taskElement.style.gap = "20px";
+        taskElement.setAttribute('data-id', task.uniqueId);
         let priorityColor;
 
         if (task.priorityValue === 'high') {
