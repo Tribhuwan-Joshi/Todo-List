@@ -87,13 +87,6 @@ addTaskDiv.addEventListener("click", showAddForm);
 // tasks arr
 let allTasks = [];
 
-// checkboxes
-
-
-
-
-
-
 
 const taskName = document.querySelector(".container-addTask input#task-name");
 const taskNote = document.querySelector(".container-addTask input#task-note");
@@ -178,15 +171,15 @@ function showAddForm() {
     const containerAdd = document.querySelector(".container-addTask");
     containerAdd.classList.remove("hidden");
     containerAdd.classList.add("flex");
-    containerAdd.setAttribute("autofocus", "autofocus");
 
+    // set autofocus on input element
+    const taskName = document.querySelector(".container-addTask input#task-name");
+    taskName.focus();
     const addBtn = document.querySelector(".container-addTask .add-btn");
     addBtn.addEventListener("click", addnewTask);
     const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
     cancelBtn.addEventListener("click", hideTaskForm);
-    taskName.value = "";
-    taskNote.value = "";
-    dueDate.value = "";
+   
 
 
 }
