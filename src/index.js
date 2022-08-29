@@ -85,7 +85,7 @@ addTaskIcon.src = taskAddIcon;
 addTaskDiv.addEventListener("click", showAddForm);
 
 // tasks arr
-let allTasks = [];
+let allTasks = JSON.parse(localStorage.getItem('allTasks'))||[];
 
 
 const taskName = document.querySelector(".container-addTask input#task-name");
@@ -134,6 +134,7 @@ function addnewTask() {
             uniqueId++
         );
         allTasks.push(myTask);
+        localStorage.setItem("allTasks", JSON.stringify(allTasks));
 console.log("after adding", allTasks);
         
         hideTaskForm();
@@ -142,32 +143,34 @@ console.log("after adding", allTasks);
             allTasks
         );
  
-    
-
-       const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
-        
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener("click", () => {
-
-
-                let data_id = checkbox.getAttribute("data-id");
-                
-                
-                // remove checked task
-                allTasks = allTasks.filter((task) => {
-                    return task.uniqueId != data_id;
-                });
-                
-                let element = document.querySelector(`div[data-id="${data_id}"]`);
-                element.parentNode.removeChild(element);
-                console.log("after checking alltasks", allTasks);
-            }
-            );
-        }
-        );
+        activateCheckboxes();
       
     }
 
+} 
+
+function activateCheckboxes() {
+    const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
+
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("click", () => {
+
+
+            let data_id = checkbox.getAttribute("data-id");
+
+
+            // remove checked task
+            allTasks = allTasks.filter((task) => {
+                return task.uniqueId != data_id;
+            });
+            localStorage.setItem("allTasks", JSON.stringify(allTasks));
+            let element = document.querySelector(`div[data-id="${data_id}"]`);
+            element.parentNode.removeChild(element);
+            console.log("after checking alltasks", JSON.parse(localStorage.getItem("allTasks")));
+        }
+        );
+    }
+    );
 }
 function showAddForm() {
     const containerAdd = document.querySelector(".container-addTask");
@@ -208,8 +211,8 @@ function hideTaskForm() {
 
 
 
-
-
+renderTask(allTasks);
+activateCheckboxes();
 
 
 

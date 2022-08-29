@@ -6,24 +6,6 @@ import editIcon from './imgs/edit.png';
 
 
 const allProjects = document.querySelector('.all-projects');
-
-// function addEventListeners() {
-//     // add event listener to checkbox
-//     const checkbox = document.querySelectorAll('.checkbox input');
-//     checkbox.forEach(checkbox => {
-//         checkbox.addEventListener('click', () => {
-//             const task = checkbox.parentElement.parentElement;
-//             if (checkbox.checked) {
-//                 allProjects.removeChild(task);
-//                 let id = checkbox.getAttribute('data-id');
-//                 tasks = tasks.filter(task => task.id !== id);
-
-//             }
-
-//         }
-//         );
-//     }
-//     );
 // add event listener to edit-btn
 const editBtn = document.querySelectorAll('.edit-btn');
 // editBtn.forEach(editBtn => {
@@ -38,10 +20,11 @@ const editBtn = document.querySelectorAll('.edit-btn');
 
 function renderTask(allTasks) {
     //clear allproject div
-    allProjects.innerHTML = '';
+    if (allTasks.length > 0) {
+        allProjects.innerHTML = '';
 
-    //add form to allProjects div
-    allProjects.innerHTML = `<div
+        //add form to allProjects div
+        allProjects.innerHTML = `<div
                     class="container-addTask   hidden w-auto md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
                     <div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
@@ -86,24 +69,24 @@ function renderTask(allTasks) {
                     </div>
                 </div>`;
 
-    // add all tasks from allTasks array to allProjects div
-    allTasks.forEach(task => {
-        const taskElement = document.createElement('div');
-        taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
-        taskElement.style.gap = "20px";
-        taskElement.setAttribute('data-id', task.uniqueId);
-        let priorityColor;
+        // add all tasks from allTasks array to allProjects div
+        allTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
+            taskElement.style.gap = "20px";
+            taskElement.setAttribute('data-id', task.uniqueId);
+            let priorityColor;
 
-        if (task.priorityValue === 'high') {
-            priorityColor = 'red';
-        }
-        else if (task.priorityValue === 'medium') {
-            priorityColor = 'blue';
-        }
-        else {
-            priorityColor = 'green';
-        }
-        taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done"></div>
+            if (task.priorityValue === 'high') {
+                priorityColor = 'red';
+            }
+            else if (task.priorityValue === 'medium') {
+                priorityColor = 'blue';
+            }
+            else {
+                priorityColor = 'green';
+            }
+            taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done"></div>
                     <div
                         class="task-info w-full  h-full p-2 text-lg flex   border-l-[6px]    bg-yellow-100 justify-between rounded-md cursor-pointer ">
                         <div class="task-name }">${task.taskName}</div>
@@ -113,13 +96,15 @@ function renderTask(allTasks) {
                         <img src="" alt="edit" class="hidden md:flex h-[20px] data-id=${task.uniqueId} edit-btn hover:cursor-pointer hover:mb-1"></img>
                        
                         `;
-        taskElement.querySelector('.task-info').style.borderColor = priorityColor;
-        taskElement.querySelector('.edit-btn').src = editIcon;
-        allProjects.appendChild(taskElement);
+            taskElement.querySelector('.task-info').style.borderColor = priorityColor;
+            taskElement.querySelector('.edit-btn').src = editIcon;
+            allProjects.appendChild(taskElement);
+        }
+        );
     }
-    );
-
-
+    else {
+        console.log("Array size is 0");
+    }
 
 
 }
