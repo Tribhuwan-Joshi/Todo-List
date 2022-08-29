@@ -111,6 +111,8 @@ function addnewTask() {
     const priority = document.querySelectorAll(
         '.container-addTask input[name="priority"]'
     );
+
+    taskName.select();
     const dueDate = document.querySelector(".container-addTask input#due-date");
     for (const i of priority) {
         if (i.checked) {
@@ -118,15 +120,15 @@ function addnewTask() {
         }
     }
 
-    if (!(taskName.value && priorityValue && dueDate.value)) {
+    if (!(taskName.value.trim() && priorityValue && dueDate.value)) {
         alert("Please fill required fields");
     } else {
         let taskDate = new Date(dueDate.value);
 
         let formattedDate = format(taskDate, "dd MMM yyyy");
         let myTask = new Task(
-            taskName.value,
-            taskNote.value,
+            taskName.value.trim(),
+            taskNote.value.trim(),
             priorityValue,
             formattedDate,
             uniqueId++
