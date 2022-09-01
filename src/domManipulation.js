@@ -1,9 +1,10 @@
 import editIcon from './imgs/edit.png';
 import { format } from 'date-fns';
 import { activateCheckboxes,activateEditBtns } from './index';
-// show new form 
+// show new form
 // const containerAdd = document.querySelector("container-addTaskForm");
 
+// form open ->  track if any form is open -> open only one form at a time
 
 
 const allProjects = document.querySelector('.all-projects');
@@ -13,8 +14,9 @@ const editBtn = document.querySelectorAll('.edit-btn');
 
 function renderTask(allTasks) {
     //clear allproject div
-    if (allTasks.length > 0) {
-        allProjects.innerHTML = '';
+  
+    allProjects.innerHTML = '';
+    allProjects.innerHTML = "<div class='flex justify-center'> No Todo enjoy your time ! 🍻</div>"
 
         //add form to allProjects div
         allProjects.innerHTML = `<div
@@ -61,7 +63,7 @@ function renderTask(allTasks) {
                         </div>
                     </div>
                 </div>`;
-
+    if (allTasks.length > 0) {
         // add all tasks from allTasks array to allProjects div
         allTasks.forEach(task => {
             const taskElement = document.createElement('div');
@@ -85,7 +87,7 @@ function renderTask(allTasks) {
             taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done"></div>
                     <div
                         class="task-info w-full  h-full p-2 text-lg flex   border-l-[6px]    bg-yellow-100 justify-between rounded-md cursor-pointer ">
-                        <div class="task-name }">${task.taskName}</div>
+                        <div class="task-name break-words w-[40%]">${task.taskName}</div>
                         <div class="notes text-sm flex w-max items-center">${task.taskNote}</div>
                         <div class="dueData text-sm flex items-center">${formattedDate}</div>
 </div>
@@ -101,9 +103,7 @@ function renderTask(allTasks) {
         activateCheckboxes()
         activateEditBtns();
     }
-    else {
-        console.log("Array size is 0");
-    }
+   
 
 
 }

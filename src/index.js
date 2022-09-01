@@ -96,12 +96,17 @@ const projects = document.querySelector(".all-projects");
 
 
 let priorityValue;
-
-// keep track of any editForm or AddForm is opened
 let formClose = true;
+// keep track of any editForm or AddForm is opened
+
 
 function addnewTask() {
-    // formClose = true;
+   
+    if (allTasks.length < 1) {
+        uniqueId = 0;
+        localStorage.setItem("uniqueId", 0);
+    }
+    
     const taskName = document.querySelector(".container-addTask input#task-name");
     const taskNote = document.querySelector(".container-addTask input#task-note");
     const priority = document.querySelectorAll(
@@ -138,8 +143,6 @@ function addnewTask() {
             allTasks
         );
 
-        // activateCheckboxes();
-        // activateEditBtns();
 
     }
 
@@ -180,7 +183,7 @@ function activateEditBtns() {
             btn.addEventListener("click", (e) => {
                 console.log("edit btn id ", e.target.getAttribute("data-id") );
                 hideTask(e.target.getAttribute("data-id"));
-                // showEditForm(e.target.getAttribute("data-id"));
+               
             }
             )
         }
@@ -189,19 +192,19 @@ function activateEditBtns() {
 }
 
 function hideTask(id) {
-    // if (formClose) {
-    //     formClose = false;
-    console.log("inside hideTask id is ",id);
-    const taskDiv = document.querySelector(`.task[data-id='${id}']`);
-    let editedTask = allTasks.find((t) => t.uniqueId == id);
+    if (formClose) {
+        formClose = false;
+        console.log("inside hideTask id is ", id);
+        const taskDiv = document.querySelector(`.task[data-id='${id}']`);
+        let editedTask = allTasks.find((t) => t.uniqueId == id);
     
-    taskDiv.classList = ""
+        taskDiv.classList = ""
 
-    let classlist = "container-addTask w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2 bg-yellow-200 flex-col md:gap-3 rounded-md px-3 flex".split(" ");
-    taskDiv.classList.add(...classlist);
-    taskDiv.setAttribute("data-id", id);
+        let classlist = "container-addTask w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2 bg-yellow-200 flex-col md:gap-3 rounded-md px-3 flex".split(" ");
+        taskDiv.classList.add(...classlist);
+        taskDiv.setAttribute("data-id", id);
 
-    taskDiv.innerHTML = `<div class="naming md:flex flex-1 justify-between gap-2">
+        taskDiv.innerHTML = `<div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name"  onfocus="this.value = this.value;" placeholder="Task *" maxlength="40" value="${editedTask.taskName}"
                             class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
                         <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60"
@@ -242,92 +245,79 @@ function hideTask(id) {
                             </button>
                         </div>
                     </div>`
-    let priority = editedTask.priorityValue;
+        let priority = editedTask.priorityValue;
 
-    document.querySelector(`.container-addTask[data-id='${id}'] input[value='${priority}']`).checked = true;
-    const taskNamediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-name`);
-    const taskNotediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-note`);
-    const Duediv = document.querySelector(`.container-addTask[data-id='${id}'] input#due-date`);
-    const prioritydiv = document.querySelectorAll(
-        '.container-addTask input[name="priority"]'
-    );
-    const len = taskNamediv.value.length;
-    taskNamediv.setSelectionRange(len, len)
-    taskNamediv.focus();
-    // let previousPrior;
+        document.querySelector(`.container-addTask[data-id='${id}'] input[value='${priority}']`).checked = true;
+        const taskNamediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-name`);
+        const taskNotediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-note`);
+        const Duediv = document.querySelector(`.container-addTask[data-id='${id}'] input#due-date`);
+        const prioritydiv = document.querySelectorAll(
+            '.container-addTask input[name="priority"]'
+        );
+        const len = taskNamediv.value.length;
+        taskNamediv.setSelectionRange(len, len)
+        taskNamediv.focus();
+  
 
-    // for (const i of prioritydiv) {
-    //     if (i.checked) {
-    //         previousPrior = i.value;
-    //     }
-    // }
-    // let previousName = taskNamediv.value;
-    // let previousNote = taskNotediv.value;
-    // let previosDue = Duediv.value;
-
-
-
-    const saveBtn = document.querySelector("button.save-btn");
-    const cancelEdit = document.querySelector("button.cancel-edit-btn");
-    saveBtn.addEventListener("click", () => {
-        const currentName = taskNamediv.value.trim();
-        const currentNote = taskNotediv.value.trim();
-        const currDate = Duediv.value;
-        let currPrior;
-        for (const i of prioritydiv) {
-            if (i.checked) {
-                currPrior = i.value;
+        const saveBtn = document.querySelector("button.save-btn");
+        const cancelEdit = document.querySelector("button.cancel-edit-btn");
+        saveBtn.addEventListener("click", () => {
+            const currentName = taskNamediv.value.trim();
+            const currentNote = taskNotediv.value.trim();
+            const currDate = Duediv.value;
+            let currPrior;
+            for (const i of prioritydiv) {
+                if (i.checked) {
+                    currPrior = i.value;
+                }
             }
-        }
-        editedTask.taskName = currentName;
-        editedTask.taskNote = currentNote;
-        editedTask.dueDate = currDate;
-        editedTask.priorityValue = currPrior;
-        localStorage.setItem("allTasks", JSON.stringify(allTasks));
-        console.log(editedTask);
-        console.log(allTasks);
-        // formClose = true;
-        renderTask(allTasks);
+            editedTask.taskName = currentName;
+            editedTask.taskNote = currentNote;
+            editedTask.dueDate = currDate;
+            editedTask.priorityValue = currPrior;
+            localStorage.setItem("allTasks", JSON.stringify(allTasks));
+            console.log(editedTask);
+            console.log(allTasks);
+            formClose = true;
+            renderTask(allTasks);
         
         
         
-    });
-    cancelEdit.addEventListener("click", () => {
-        console.log("cancel pressed");
-        renderTask(allTasks);
-        // formClose = true;
-    })
+        });
+        cancelEdit.addEventListener("click", () => {
+            console.log("cancel pressed");
+            formClose = true;
+            renderTask(allTasks);
+        
+        })
+    }
 }
 
 
-// function updateTask(id,task, taskDiv) {
-//     let taskname = document.querySelector(`.container-addTask[data-id='${id}'] input#task-name`);
-//     task.taskName = taskname.value;
-//     renderTask(allTasks);
-//     formClose = true;
-// }
-
 function showAddForm() {
-    // if (formClose) {
-    const containerAdd = document.querySelector(".container-addTask");
-    containerAdd.classList.remove("hidden");
-    containerAdd.classList.add("flex");
-    // formClose = true;
-    // set autofocus on input element
-    const taskName = document.querySelector(".container-addTask input#task-name");
-    taskName.focus();
-    const addBtn = document.querySelector(".container-addTask .add-btn");
-    addBtn.addEventListener("click", addnewTask);
-    const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
-    cancelBtn.addEventListener("click", hideTaskForm);
-
+    if (
+        formClose
+    ) {
+        formClose = false;
+        const containerAdd = document.querySelector(".container-addTask");
+        containerAdd.classList.remove("hidden");
+        containerAdd.classList.add("flex");
+        
+        // set autofocus on input element
+        const taskName = document.querySelector(".container-addTask input#task-name");
+        taskName.focus();
+        const addBtn = document.querySelector(".container-addTask .add-btn");
+        addBtn.addEventListener("click", addnewTask);
+        const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
+        cancelBtn.addEventListener("click", hideTaskForm);
+    }
 }
 
 
 
 
 function hideTaskForm() {
-    // formClose = true;
+    formClose = true;
     const containerAdd = document.querySelector(".container-addTask");
     containerAdd.classList.remove("flex");
     containerAdd.classList.add("hidden");
@@ -348,6 +338,22 @@ function hideTaskForm() {
     dueDate.value = "";
 }
 
+
+// delete all Tasks
+const deleteAllBtn = document.querySelector("button.delete-all");
+deleteAllBtn.addEventListener("click", () => {
+    let decision = confirm("You want to delete all of your todos ?"); 1
+    console.log(decision);
+    if (decision) {
+        allTasks = []
+        localStorage.setItem("allTasks", JSON.stringify(allTasks));
+        uniqueId = 0
+        localStorage.setItem("uniqueId", 0);
+        console.log("After delete", allTasks);
+        console.log("Unique id",uniqueId);
+        renderTask(allTasks);
+    }
+})
 
 
 renderTask(allTasks);
