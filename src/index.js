@@ -1,5 +1,4 @@
-/* Imports js */
-import { format } from 'date-fns';
+/* Imports css */
 import "./style.css";
 import { renderTask } from "./domManipulation.js";
 
@@ -44,14 +43,6 @@ import home from "../src/imgs/home.png";
 const homeImg = document.querySelector(".home-img");
 homeImg.src = home;
 
-import today from "../src/imgs/today.png";
-const todayImg = document.querySelector(".today-img");
-todayImg.src = today;
-
-import week from "../src/imgs/week.png";
-const weekImg = document.querySelector(".week-img");
-weekImg.src = week;
-
 
 // Projects
 import projectIcon from '../src/imgs/project.png'
@@ -68,9 +59,9 @@ const pages = document.querySelectorAll('[class*="-index"]');
 pages.forEach((page) => {
     page.addEventListener("click", () => {
         pages.forEach((page) => {
-            page.classList.remove("bg-gray-100");
+            page.classList.remove("bg-white");
         });
-        page.classList.add("bg-gray-100");
+        page.classList.add("bg-white");
     });
 });
 
@@ -85,7 +76,8 @@ addTaskIcon.src = taskAddIcon;
 addTaskDiv.addEventListener("click", showAddForm);
 
 // tasks arr
-let allTasks = JSON.parse(localStorage.getItem('allTasks'))||[];
+let allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+let uniqueId = (allTasks.length) ? localStorage.getItem("uniqueId") : 0;
 
 
 const taskName = document.querySelector(".container-addTask input#task-name");
@@ -102,10 +94,14 @@ cancelBtn.addEventListener("click", hideTaskForm);
 const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
 const projects = document.querySelector(".all-projects");
 
-let uniqueId = 0;
+
 let priorityValue;
 
+// keep track of any editForm or AddForm is opened
+let formClose = true;
+
 function addnewTask() {
+    // formClose = true;
     const taskName = document.querySelector(".container-addTask input#task-name");
     const taskNote = document.querySelector(".container-addTask input#task-note");
     const priority = document.querySelectorAll(
@@ -123,60 +119,200 @@ function addnewTask() {
     if (!(taskName.value.trim() && priorityValue && dueDate.value)) {
         alert("Please fill required fields");
     } else {
-        let taskDate = new Date(dueDate.value);
 
-        let formattedDate = format(taskDate, "dd MMM yyyy");
         let myTask = new Task(
             taskName.value.trim(),
             taskNote.value.trim(),
             priorityValue,
-            formattedDate,
+            dueDate.value,
             uniqueId++
         );
         allTasks.push(myTask);
         localStorage.setItem("allTasks", JSON.stringify(allTasks));
-console.log("after adding", allTasks);
-        
+        localStorage.setItem("uniqueId", uniqueId)
+        console.log("after adding", allTasks);
+
         hideTaskForm();
 
         renderTask(
             allTasks
         );
- 
-        activateCheckboxes();
-      
+
+        // activateCheckboxes();
+        // activateEditBtns();
+
     }
 
-} 
+}
+
+
 
 function activateCheckboxes() {
-    const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
+    if (allTasks.length > 0) {
+        const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
 
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("click", () => {
-
-
-            let data_id = checkbox.getAttribute("data-id");
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("click", () => {
 
 
-            // remove checked task
-            allTasks = allTasks.filter((task) => {
-                return task.uniqueId != data_id;
-            });
-            localStorage.setItem("allTasks", JSON.stringify(allTasks));
-            let element = document.querySelector(`div[data-id="${data_id}"]`);
-            element.parentNode.removeChild(element);
-            console.log("after checking alltasks", JSON.parse(localStorage.getItem("allTasks")));
+                let data_id = checkbox.getAttribute("data-id");
+
+
+                // remove checked task
+                allTasks = allTasks.filter((task) => {
+                    return task.uniqueId != data_id;
+                });
+                localStorage.setItem("allTasks", JSON.stringify(allTasks));
+                let element = document.querySelector(`div[data-id="${data_id}"]`);
+                element.parentNode.removeChild(element);
+                console.log("after checking alltasks", JSON.parse(localStorage.getItem("allTasks")));
+            }
+            );
         }
         );
     }
-    );
 }
+
+function activateEditBtns() {
+    if (allTasks.length > 0) {
+        const editBtns = document.querySelectorAll(".task .edit-btn");
+        editBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                console.log("edit btn id ", e.target.getAttribute("data-id") );
+                hideTask(e.target.getAttribute("data-id"));
+                // showEditForm(e.target.getAttribute("data-id"));
+            }
+            )
+        }
+        )
+    }
+}
+
+function hideTask(id) {
+    // if (formClose) {
+    //     formClose = false;
+    console.log("inside hideTask id is ",id);
+    const taskDiv = document.querySelector(`.task[data-id='${id}']`);
+    let editedTask = allTasks.find((t) => t.uniqueId == id);
+    
+    taskDiv.classList = ""
+
+    let classlist = "container-addTask w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2 bg-yellow-200 flex-col md:gap-3 rounded-md px-3 flex".split(" ");
+    taskDiv.classList.add(...classlist);
+    taskDiv.setAttribute("data-id", id);
+
+    taskDiv.innerHTML = `<div class="naming md:flex flex-1 justify-between gap-2">
+                        <input type="text" name="task" id="task-name"  onfocus="this.value = this.value;" placeholder="Task *" maxlength="40" value="${editedTask.taskName}"
+                            class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
+                        <input type="text" name="Note" id="task-note" placeholder="Note ( optional )" maxlength="60"
+                            value="${editedTask.taskNote}"
+                            class="rounded-sm mt-2 md:mt-0 focus:outline-1 focus:outline-red-400 outline-none flex-1 md:flex-grow-[2] flex-shrink w-fit px-2 py-1" />
+                    </div>
+                    <div class="priorDate justify-between flex flex-1 gap-4 flex-wrap">
+                        <div class="prior flex gap-2 items-center">
+                            <div class="font-semibold mr-4 text-lg">Priority</div>
+                            <div class="choices flex flex-wrap gap-2">
+                                <div>
+                                    <input type="radio" name="priority" id="low" value="low" />
+                                    <label for="low" class="text-green-700 font-semibold">Low</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="priority" id="medium" value="medium" />
+                                    <label for="medium" class="text-blue-700 font-semibold">Medium</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="priority" id="high" value="high" />
+                                    <label for="high" class="text-red-700 font-semibold">High</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <label for="dueDate" class="text-lg font-semibold mr-4" >Due</label>
+                            <input type="date" name="" id="due-date" value="${editedTask.dueDate}" class="rounded-md px-2"/>
+                        </div>
+
+                        <div class="buttons flex gap-2">
+                            <button
+                                class="bg-green-600 save-btn rounded-md px-4 py-1 hover:bg-green-700 active:bg-green-600 text-white">
+                                Save
+                            </button>
+                            <button
+                                class="bg-red-500 cancel-edit-btn rounded-md px-4 py-1 hover:bg-red-600 active:bg-red-500 text-white">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>`
+    let priority = editedTask.priorityValue;
+
+    document.querySelector(`.container-addTask[data-id='${id}'] input[value='${priority}']`).checked = true;
+    const taskNamediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-name`);
+    const taskNotediv = document.querySelector(`.container-addTask[data-id='${id}'] input#task-note`);
+    const Duediv = document.querySelector(`.container-addTask[data-id='${id}'] input#due-date`);
+    const prioritydiv = document.querySelectorAll(
+        '.container-addTask input[name="priority"]'
+    );
+    const len = taskNamediv.value.length;
+    taskNamediv.setSelectionRange(len, len)
+    taskNamediv.focus();
+    // let previousPrior;
+
+    // for (const i of prioritydiv) {
+    //     if (i.checked) {
+    //         previousPrior = i.value;
+    //     }
+    // }
+    // let previousName = taskNamediv.value;
+    // let previousNote = taskNotediv.value;
+    // let previosDue = Duediv.value;
+
+
+
+    const saveBtn = document.querySelector("button.save-btn");
+    const cancelEdit = document.querySelector("button.cancel-edit-btn");
+    saveBtn.addEventListener("click", () => {
+        const currentName = taskNamediv.value.trim();
+        const currentNote = taskNotediv.value.trim();
+        const currDate = Duediv.value;
+        let currPrior;
+        for (const i of prioritydiv) {
+            if (i.checked) {
+                currPrior = i.value;
+            }
+        }
+        editedTask.taskName = currentName;
+        editedTask.taskNote = currentNote;
+        editedTask.dueDate = currDate;
+        editedTask.priorityValue = currPrior;
+        localStorage.setItem("allTasks", JSON.stringify(allTasks));
+        console.log(editedTask);
+        console.log(allTasks);
+        // formClose = true;
+        renderTask(allTasks);
+        
+        
+        
+    });
+    cancelEdit.addEventListener("click", () => {
+        console.log("cancel pressed");
+        renderTask(allTasks);
+        // formClose = true;
+    })
+}
+
+
+// function updateTask(id,task, taskDiv) {
+//     let taskname = document.querySelector(`.container-addTask[data-id='${id}'] input#task-name`);
+//     task.taskName = taskname.value;
+//     renderTask(allTasks);
+//     formClose = true;
+// }
+
 function showAddForm() {
+    // if (formClose) {
     const containerAdd = document.querySelector(".container-addTask");
     containerAdd.classList.remove("hidden");
     containerAdd.classList.add("flex");
-
+    // formClose = true;
     // set autofocus on input element
     const taskName = document.querySelector(".container-addTask input#task-name");
     taskName.focus();
@@ -184,11 +320,14 @@ function showAddForm() {
     addBtn.addEventListener("click", addnewTask);
     const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
     cancelBtn.addEventListener("click", hideTaskForm);
-   
-
 
 }
+
+
+
+
 function hideTaskForm() {
+    // formClose = true;
     const containerAdd = document.querySelector(".container-addTask");
     containerAdd.classList.remove("flex");
     containerAdd.classList.add("hidden");
@@ -196,7 +335,7 @@ function hideTaskForm() {
     addBtn.addEventListener("click", addnewTask);
     const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
     cancelBtn.addEventListener("click", hideTaskForm);
- 
+
     const taskName = document.querySelector(".container-addTask input#task-name");
     const taskNote = document.querySelector(".container-addTask input#task-note");
     const priority = document.querySelectorAll(
@@ -212,7 +351,8 @@ function hideTaskForm() {
 
 
 renderTask(allTasks);
-activateCheckboxes();
+export { activateCheckboxes, activateEditBtns }
+
 
 
 

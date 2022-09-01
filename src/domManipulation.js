@@ -1,5 +1,6 @@
 import editIcon from './imgs/edit.png';
-
+import { format } from 'date-fns';
+import { activateCheckboxes,activateEditBtns } from './index';
 // show new form 
 // const containerAdd = document.querySelector("container-addTaskForm");
 
@@ -8,15 +9,7 @@ import editIcon from './imgs/edit.png';
 const allProjects = document.querySelector('.all-projects');
 // add event listener to edit-btn
 const editBtn = document.querySelectorAll('.edit-btn');
-// editBtn.forEach(editBtn => {
-//     editBtn.addEventListener('click', () => {
-//         const task = editBtn.parentElement.parentElement;
-//         task.classList.toggle('bg-gray-100');
-//     }
-//     );
-// }
-// );
-// }
+
 
 function renderTask(allTasks) {
     //clear allproject div
@@ -25,7 +18,7 @@ function renderTask(allTasks) {
 
         //add form to allProjects div
         allProjects.innerHTML = `<div
-                    class="container-addTask   hidden w-auto md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
+                    class="container-addTask   hidden w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
                     <div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
                             class="rounded-sm focus:outline-1 focus:outline-red-400 outline-none px-2 py-1 flex-1" />
@@ -75,6 +68,7 @@ function renderTask(allTasks) {
             taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
             taskElement.style.gap = "20px";
             taskElement.setAttribute('data-id', task.uniqueId);
+            console.log("TaskID", task.uniqueId);
             let priorityColor;
 
             if (task.priorityValue === 'high') {
@@ -86,21 +80,26 @@ function renderTask(allTasks) {
             else {
                 priorityColor = 'green';
             }
+            let taskDate = new Date(task.dueDate);
+            let formattedDate = format(taskDate, "dd MMM yyyy");
             taskElement.innerHTML = `<div class="checkbox"> <input data-id=${task.uniqueId} type="checkbox" name="done"></div>
                     <div
                         class="task-info w-full  h-full p-2 text-lg flex   border-l-[6px]    bg-yellow-100 justify-between rounded-md cursor-pointer ">
                         <div class="task-name }">${task.taskName}</div>
                         <div class="notes text-sm flex w-max items-center">${task.taskNote}</div>
-                        <div class="dueData text-sm flex items-center">${task.dueDate}</div>
+                        <div class="dueData text-sm flex items-center">${formattedDate}</div>
 </div>
-                        <img src="" alt="edit" class="hidden md:flex h-[20px] data-id=${task.uniqueId} edit-btn hover:cursor-pointer hover:mb-1"></img>
-                       
+                        <img src="" alt="edit" class="hidden md:flex h-[20px]  edit-btn hover:cursor-pointer hover:mb-1" data-id=${task.uniqueId}></img>
+
                         `;
             taskElement.querySelector('.task-info').style.borderColor = priorityColor;
             taskElement.querySelector('.edit-btn').src = editIcon;
             allProjects.appendChild(taskElement);
         }
+      
         );
+        activateCheckboxes()
+        activateEditBtns();
     }
     else {
         console.log("Array size is 0");
@@ -108,5 +107,10 @@ function renderTask(allTasks) {
 
 
 }
+
+
+
+
+
 
 export { renderTask };
