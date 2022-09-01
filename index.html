@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
     <link rel="icon" href="" />
-<script defer src="bundle.js?bb79adcfa537f35c585b"></script></head>
+<script defer src="bundle.js?c4b850aaaf042ca32969"></script></head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
     <!-- header -->
     <div class="header row-span-1 col-start-1 col-end-3 bg-blue-100 border-b border-b-black flex px-4 justify-center items-center">
-        <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a href="https://github.com/Tribhuwan-Joshi" ><img src=""  alt=""
+        <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a href="https://github.com/Tribhuwan-Joshi" target="_blank"><img src=""  alt=""
                 class="github-icon w-[24px] h-auto hover:cursor-pointer "></a> <div class="github-name hidden font-mono text-sm">Made by Tjsm with ❤️</div> </div>
 
         <div class="logo"><img class="h-[36px] tick-logo" src="" alt="" /></div>
@@ -25,18 +25,11 @@
     <!-- navbar -->
     <div
         class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-green-300 flex flex-col pt-10 px-2 gap-7 min-w-[200px] text-xl tracking-wide border-r border-r-black">
-        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto bg-gray-100 px-3 py-2 rounded-md">
+        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto bg-white px-3 py-2  rounded-md">
             <img class="home-img h-[22px]" src="" alt="home" />
-            <div class="hover:cursor-pointer hover:text-green-800">Home</div>
+            <div class="hover:cursor-pointer  hover:text-gray-700 text-xl">Home</div>
         </div>
-        <div class="flex today-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto">
-            <img class="today-img h-[22px]" src="" alt="today" />
-            <div class="hover:cursor-pointer hover:text-green-800">Today</div>
-        </div>
-        <div class="flex week-index gap-4 justify-center items-center rounded-md w-max h-max px-3 py-2 mx-auto">
-            <img class="week-img h-[22px]" src="" alt="week" />
-            <div class="hover:cursor-pointer hover:text-green-800">Week</div>
-        </div>
+        
 
         <div class="flex justify-center underline underline-offset-2 mt-6 items-center gap-4">
             <img class="project-icon mt-1 h-[30px]" src="" alt="project" />
@@ -45,7 +38,7 @@
                 title="Add project" />
         </div>
 
-        <div class="projects space-y-3 text-xl flex flex-col w-[90%] mx-auto  mb-[15px] overflow-auto h-[300px]">
+        <div class="projects space-y-4 text-xl flex flex-col w-[90%] mx-auto  mb-[15px] h-max-[400px] overflow-auto h-auto">
             <div class="text-center gym-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
                Gym
             </div>
@@ -53,15 +46,18 @@
          
          
             <div class="text-center music-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
-                Music
+                Music lessons
             </div>
             <div class="text-center matrix-index hover:cursor-pointer  items-center w-full rounded-md  py-1" >
-              Matrix my neck scars and life
+              Keep my Rubies Safe
+            </div>
+            <div class="text-center matrix-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
+                Read Clean Code
             </div>
             
         </div>
         <button
-            class="delete-all bg-red-500 -mt-4 w-fit py-1 px-4 text-base mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
+            class="delete-all bg-red-500 mt-auto  mb-10 w-fit py-1 px-4 text-base mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
             Delete All
         </button>
     </div>
