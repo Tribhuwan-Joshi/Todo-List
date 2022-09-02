@@ -55,15 +55,7 @@ projectAddImg.src = projectAdd;
 
 
 // Project bars onClick effect
-const pages = document.querySelectorAll('[class*="-index"]');
-pages.forEach((page) => {
-    page.addEventListener("click", () => {
-        pages.forEach((page) => {
-            page.classList.remove("bg-white");
-        });
-        page.classList.add("bg-white");
-    });
-});
+
 
 
 
@@ -354,7 +346,6 @@ deleteAllBtn.addEventListener("click", () => {
         renderTask(allTasks);
     }
 })
-
 
 renderTask(allTasks);
 export { activateCheckboxes, activateEditBtns }

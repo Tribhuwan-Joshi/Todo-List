@@ -1,25 +1,98 @@
 import editIcon from './imgs/edit.png';
+import projDeleteIcon from './imgs/proDelete.png'
 import { format } from 'date-fns';
-import { activateCheckboxes,activateEditBtns } from './index';
+import { Project } from './project'
+import { activateCheckboxes, activateEditBtns } from './index';
 // show new form
 // const containerAdd = document.querySelector("container-addTaskForm");
 
 // form open ->  track if any form is open -> open only one form at a time
 
 
-const allProjects = document.querySelector('.all-projects');
+const allProjects = document.querySelector('.all-projects');  // refer to that content 
 // add event listener to edit-btn
 const editBtn = document.querySelectorAll('.edit-btn');
+
+const projectAddForm = document.querySelector('.project-add-form')
+
+const projectFormbtn = document.querySelector('img.project-add-img');
+const projectPlusbtn = document.querySelector('button.project-add-btn');
+const projectCancelbtn = document.querySelector('button.project-cancel-btn');
+
+let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr")) || [];
+
+projectPlusbtn.addEventListener("click", addProject);
+projectCancelbtn.addEventListener("click", () => {
+
+    projectAddForm.classList.add('hidden');
+    projectAddForm.querySelector("input").value = "";
+
+});
+
+
+projectFormbtn.addEventListener("click", () => {
+    projectAddForm.classList.remove('hidden');
+    projectAddForm.querySelector("input").focus();
+
+});
+
+
+function addProject() {
+    const projName = projectAddForm.querySelector("input").value;
+    let myProject = Project(projName);
+    allProjectArr.push(myProject);
+    projectAddForm.querySelector("input").value = "";
+    localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+    projectAddForm.classList.add('hidden');
+    projectAddForm.querySelector("input").value = "";
+    renderProjects(allProjectArr);
+    updatePagesEffect();
+
+
+}
+
+function updatePagesEffect() {
+    const pages = document.querySelectorAll('[class*="-index"]');
+    pages.forEach((page) => {
+        page.addEventListener("click", () => {
+            pages.forEach((page) => {
+                page.classList.remove("bg-white");
+
+
+
+            });
+            page.classList.add("bg-white");
+
+
+        });
+    });
+}
+
+function renderProjects(allProjectArr) {
+    const projectContainer = document.querySelector(".projects-container");
+    projectContainer.textContent = "";
+    allProjectArr.forEach(project => {
+        let thisProjName = project.projectName;
+        projectContainer.innerHTML += `<div class="text-center flex justify-between  items-center w-full ">
+                <div class="gym-index w-[85%]  
+rounded-md hover:cursor-pointer py-1">${thisProjName}</div>
+                <img class="pro-delete hover:cursor-pointer hidden h-[16px]" alt="pro-delete">
+                
+            </div>`
+    })
+
+
+}
 
 
 function renderTask(allTasks) {
     //clear allproject div
-  
+
     allProjects.innerHTML = '';
     allProjects.innerHTML = "<div class='flex justify-center'> No Todo enjoy your time ! 🍻</div>"
 
-        //add form to allProjects div
-        allProjects.innerHTML = `<div
+    //add form to allProjects div
+    allProjects.innerHTML = `<div
                     class="container-addTask   hidden w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2   bg-yellow-200 flex-col md:gap-3 rounded-md px-3">
                     <div class="naming md:flex flex-1 justify-between gap-2">
                         <input type="text" name="task" id="task-name" placeholder="Task *" maxlength="40"
@@ -98,19 +171,19 @@ function renderTask(allTasks) {
             taskElement.querySelector('.edit-btn').src = editIcon;
             allProjects.appendChild(taskElement);
         }
-      
+
         );
         activateCheckboxes()
         activateEditBtns();
     }
-   
+
 
 
 }
 
 
-
-
+renderProjects(allProjectArr);
+updatePagesEffect()
 
 
 export { renderTask };

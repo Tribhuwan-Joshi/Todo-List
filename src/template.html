@@ -11,9 +11,13 @@
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
     <!-- header -->
-    <div class="header row-span-1 col-start-1 col-end-3 bg-blue-100 border-b border-b-black flex px-4 justify-center items-center">
-        <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a href="https://github.com/Tribhuwan-Joshi" target="_blank"><img src=""  alt=""
-                class="github-icon w-[24px] h-auto hover:cursor-pointer "></a> <div class="github-name hidden font-mono text-sm">Made by Tjsm with ❤️</div> </div>
+    <div
+        class="header row-span-1 col-start-1 col-end-3 bg-blue-100 border-b border-b-black flex px-4 justify-center items-center">
+        <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a
+                href="https://github.com/Tribhuwan-Joshi" target="_blank"><img src="" alt=""
+                    class="github-icon w-[24px] h-auto hover:cursor-pointer "></a>
+            <div class="github-name hidden font-mono text-sm">Made by Tjsm with ❤️</div>
+        </div>
 
         <div class="logo"><img class="h-[36px] tick-logo" src="" alt="" /></div>
         <div class="name mx-4 text-5xl font-['system ui'] font-light tracking-wider">
@@ -24,47 +28,48 @@
 
     <!-- navbar -->
     <div
-        class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-green-300 flex flex-col pt-10 px-2 gap-7 min-w-[200px] text-xl tracking-wide border-r border-r-black">
+        class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-green-300 flex flex-col pt-10 px-2 gap-7 min-w-[230px] text-xl tracking-wide border-r border-r-black">
         <div class="flex home-index gap-4 justify-center items-center w-max mx-auto bg-white px-3 py-2  rounded-md">
             <img class="home-img h-[22px]" src="" alt="home" />
-            <div class="hover:cursor-pointer  hover:text-gray-700 text-xl">Home</div>
+            <div class="hover:cursor-pointer  hover:text-gray-700 text-2xl">Home</div>
         </div>
-        
 
-        <div class="flex justify-center underline underline-offset-2 mt-6 items-center gap-4">
+
+        <div class="flex justify-around underline underline-offset-2 mt-6 h-[60px] items-center gap-4">
             <img class="project-icon mt-1 h-[30px]" src="" alt="project" />
-            <div class="font-normal text-2xl">Projects</div>
-            <img class="project-add-img mr-2 hover:mb-1 mt-1 h-[26px] cursor-pointer" src="" alt="add project"
+            <div class="font-normal text-2xl tracking-wider">Projects</div>
+            <img class="project-add-img mr-2 hover:mb-1 mt-1 h-[28px] cursor-pointer " src="" alt="add project"
                 title="Add project" />
         </div>
-
-        <div class="projects space-y-4 text-xl flex flex-col w-[90%] mx-auto  mb-[15px] h-max-[400px] overflow-auto h-auto">
-            <div class="text-center gym-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
-               Gym
-            </div>
-            
-         
-         
-            <div class="text-center music-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
-                Music lessons
-            </div>
-            <div class="text-center matrix-index hover:cursor-pointer  items-center w-full rounded-md  py-1" >
-              Keep my Rubies Safe
-            </div>
-            <div class="text-center matrix-index hover:cursor-pointer  items-center w-full rounded-md  py-1">
-                Read Clean Code
+        <div class="project-add-form hidden -mt-6 text-center text-sm  border-4 bg-orange-300 border-yellow-400 py-1">
+            <input type="text" spellcheck="false" class=" outline-none  px-1 w-[90%] text-base my-2 mx-1 rounded-sm"  name="project-name">
+            <div class="btns flex justify-around">
+                <button class="project-add-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-green-600 active:bg-green-700 hover:bg-green-500">Add</button>
+                <button class="project-cancel-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-red-600 active:bg-red-700 hover:bg-red-500">Cancel</button>
             </div>
             
         </div>
+
+        <div
+            class="projects-container space-y-4 text-xl flex flex-col w-[90%] mx-auto -mt-[15px] mb-[15px] h-max-[400px] overflow-auto h-auto">
+            <div class="text-center flex justify-between  items-center w-full ">
+                <div class="gym-index w-[85%]  
+rounded-md hover:cursor-pointer py-1">Gym</div>
+                <img class="pro-delete hover:cursor-pointer hidden h-[16px]" alt="pro-delete">
+                
+            </div>
+
+        </div>
         <button
-            class="delete-all bg-red-500 mt-auto  mb-10 w-fit py-1 px-4 text-base mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
+            class="delete-all bg-red-500 mt-auto  mb-10 w-fit py-1 px-4 text-lg mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
             Delete All
         </button>
     </div>
 
     <!-- main -->
     <div class="main col-start-2 row-start-2 h-[93vh] flex justify-center items-center bg-blue-200 ">
-        <div class="content w-[85%] border border-black bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
+        <div
+            class="content w-[85%] border border-black bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
             <div class="top-bar flex page-name justify-between">
                 <div class="text-4xl font-semibold">Home</div>
                 <div
@@ -119,9 +124,9 @@
                     </div>
                 </div>
 
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
