@@ -1,9 +1,11 @@
-function Project(name) {
-   let projectName = name;
-   let  projectTasksList = []
+function Project(name, id) {
+    let projectUid = id;
+    let projectName = name;
+    let projectTasksList = []
     return {
         projectName,
-        projectTasksList
+        projectTasksList,
+        projectUid
     }
 }
 

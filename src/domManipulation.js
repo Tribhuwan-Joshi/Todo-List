@@ -1,5 +1,5 @@
 import editIcon from './imgs/edit.png';
-import projDeleteIcon from './imgs/proDelete.png'
+import projDeleteIconSrc from './imgs/proDelete.png'
 import { format } from 'date-fns';
 import { Project } from './project'
 import { activateCheckboxes, activateEditBtns } from './index';
@@ -12,7 +12,6 @@ import { activateCheckboxes, activateEditBtns } from './index';
 const allProjects = document.querySelector('.all-projects');  // refer to that content 
 // add event listener to edit-btn
 const editBtn = document.querySelectorAll('.edit-btn');
-
 const projectAddForm = document.querySelector('.project-add-form')
 
 const projectFormbtn = document.querySelector('img.project-add-img');
@@ -22,68 +21,151 @@ const projectCancelbtn = document.querySelector('button.project-cancel-btn');
 let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr")) || [];
 
 projectPlusbtn.addEventListener("click", addProject);
-projectCancelbtn.addEventListener("click", () => {
+projectCancelbtn.addEventListener("click", hideProjectForm);
 
-    projectAddForm.classList.add('hidden');
-    projectAddForm.querySelector("input").value = "";
-
-});
 
 
 projectFormbtn.addEventListener("click", () => {
     projectAddForm.classList.remove('hidden');
     projectAddForm.querySelector("input").focus();
+    const projectContainer = document.querySelector(".projects-container");
+    projectContainer.style.height = "300px";
+
 
 });
 
+let projectUid = localStorage.getItem("projectUid") || 0;
+let currentProjectPage = null;
+
+
 
 function addProject() {
+    if (allProjectArr.length == 0) {
+        projectUid = 0;
+        localStorage.setItem("projectUid", 0);
+    }
     const projName = projectAddForm.querySelector("input").value;
-    let myProject = Project(projName);
-    allProjectArr.push(myProject);
-    projectAddForm.querySelector("input").value = "";
-    localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+    if (!allProjectArr.find(i => i.projectName == projName)) {
+        let myProject = Project(projName, projectUid);
+        projectUid++; localStorage.setItem("projectUid", projectUid);
+        allProjectArr.push(myProject);
+
+        localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+        projectAddForm.classList.add('hidden');
+        // console.log(allProjectArr);
+        renderProjects(allProjectArr);
+        updatePagesEffect();
+        let nodelist = document.querySelectorAll(".projects-container .proj-index");
+        let newCreatedProject = nodelist[nodelist.length - 1];
+        newCreatedProject.click();
+        newCreatedProject.scrollIntoView();
+        hideProjectForm();
+    }
+    else {
+        alert(" This Project Name is already used !");
+        projectAddForm.querySelector("input").value = "";
+        projectAddForm.querySelector("input").focus();
+    }
+
+
+}
+
+function hideProjectForm() {
+    projectAddForm
     projectAddForm.classList.add('hidden');
     projectAddForm.querySelector("input").value = "";
-    renderProjects(allProjectArr);
-    updatePagesEffect();
+    const projectContainer = document.querySelector(".projects-container");
+    projectContainer.style.height = "400px";
+
+
 
 
 }
 
 function updatePagesEffect() {
     const pages = document.querySelectorAll('[class*="-index"]');
+    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
+
     pages.forEach((page) => {
         page.addEventListener("click", () => {
             pages.forEach((page) => {
+
                 page.classList.remove("bg-white");
+                projectDeleteBtns.forEach(pd => {
+                    pd.classList.add("invisible");
+                })
 
 
 
             });
             page.classList.add("bg-white");
+            // currentProjectPage = allProjectArr.find(i => i.projectUid == page.getAttribute("project-id"));
+            // console.log(page.getAttribute("project-id"));
+            // renderProjects(allProjectArr, currentProjectPage)
+            page.parentNode.querySelector(".pro-delete").classList.remove("invisible");
 
 
         });
     });
 }
 
-function renderProjects(allProjectArr) {
+
+// currentPageName
+// const currentProjectName = document.querySelector(".currentPageName");
+// console.log(currentProjectName.textContent);
+
+function renderProjects(allProjectArr, currentProjectPage = null) {
+
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.textContent = "";
-    allProjectArr.forEach(project => {
-        let thisProjName = project.projectName;
-        projectContainer.innerHTML += `<div class="text-center flex justify-between  items-center w-full ">
-                <div class="gym-index w-[85%]  
-rounded-md hover:cursor-pointer py-1">${thisProjName}</div>
-                <img class="pro-delete hover:cursor-pointer hidden h-[16px]" alt="pro-delete">
+    if (allProjectArr.length > 0) {
+        // render Home page when currentProject is null
+
+        allProjectArr.forEach(project => {
+            let thisProjName = project.projectName;
+            projectContainer.innerHTML += `<div class="text-center flex justify-around  items-center w-full ">
+                <div class="proj-index w-[75%] break-words  last:bg-red-400
+rounded-md hover:cursor-pointer py-1 " project-id="${project.projectUid}">${thisProjName}</div>
+                <img class="pro-delete hover:cursor-pointer invisible hover:visible h-[14px]"  title="Delete" src="" alt="pro-delete">
                 
-            </div>`
-    })
+            </div>
+            <hr>`
+        })
+        renderProjectDeleteIcon();
+        activateDeleteIcon();
+        updatePagesEffect();
 
 
+    }
 }
 
+function activateDeleteIcon() {
+    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
+    projectDeleteBtns.forEach(pd => {
+        pd.addEventListener("click", (e) => {
+            console.log("inside click arr", allProjectArr);
+            let name = e.target.parentNode.querySelector(".proj-index").textContent;
+
+
+            allProjectArr = allProjectArr.filter(i => {
+
+                return i.projectName != name;
+
+            })
+            console.log(allProjectArr);
+            localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+            renderProjects(allProjectArr);
+
+        })
+    })
+}
+
+function renderProjectDeleteIcon() {
+    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
+    projectDeleteBtns.forEach(pd => {
+        pd.src = projDeleteIconSrc;
+    })
+}
 
 function renderTask(allTasks) {
     //clear allproject div
@@ -143,7 +225,7 @@ function renderTask(allTasks) {
             taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
             taskElement.style.gap = "20px";
             taskElement.setAttribute('data-id', task.uniqueId);
-            console.log("TaskID", task.uniqueId);
+
             let priorityColor;
 
             if (task.priorityValue === 'high') {
@@ -181,9 +263,40 @@ function renderTask(allTasks) {
 
 }
 
+function deleteAllProjects() {
+    allProjectArr = []
+    localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+    renderProjects(allProjectArr);
+}
+
+
+// track what is the current page and change the content accordingly 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 renderProjects(allProjectArr);
 updatePagesEffect()
 
 
-export { renderTask };
+export { renderTask, deleteAllProjects };

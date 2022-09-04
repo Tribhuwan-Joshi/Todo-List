@@ -1,6 +1,6 @@
 /* Imports css */
 import "./style.css";
-import { renderTask } from "./domManipulation.js";
+import { renderTask,deleteAllProjects } from "./domManipulation.js";
 
 // import classes
 import { Task } from './task'
@@ -127,7 +127,7 @@ function addnewTask() {
         allTasks.push(myTask);
         localStorage.setItem("allTasks", JSON.stringify(allTasks));
         localStorage.setItem("uniqueId", uniqueId)
-        console.log("after adding", allTasks);
+        
 
         hideTaskForm();
 
@@ -160,7 +160,7 @@ function activateCheckboxes() {
                 localStorage.setItem("allTasks", JSON.stringify(allTasks));
                 let element = document.querySelector(`div[data-id="${data_id}"]`);
                 element.parentNode.removeChild(element);
-                console.log("after checking alltasks", JSON.parse(localStorage.getItem("allTasks")));
+         
             }
             );
         }
@@ -173,7 +173,6 @@ function activateEditBtns() {
         const editBtns = document.querySelectorAll(".task .edit-btn");
         editBtns.forEach(btn => {
             btn.addEventListener("click", (e) => {
-                console.log("edit btn id ", e.target.getAttribute("data-id") );
                 hideTask(e.target.getAttribute("data-id"));
                
             }
@@ -186,7 +185,7 @@ function activateEditBtns() {
 function hideTask(id) {
     if (formClose) {
         formClose = false;
-        console.log("inside hideTask id is ", id);
+
         const taskDiv = document.querySelector(`.task[data-id='${id}']`);
         let editedTask = allTasks.find((t) => t.uniqueId == id);
     
@@ -268,8 +267,7 @@ function hideTask(id) {
             editedTask.dueDate = currDate;
             editedTask.priorityValue = currPrior;
             localStorage.setItem("allTasks", JSON.stringify(allTasks));
-            console.log(editedTask);
-            console.log(allTasks);
+          
             formClose = true;
             renderTask(allTasks);
         
@@ -277,7 +275,7 @@ function hideTask(id) {
         
         });
         cancelEdit.addEventListener("click", () => {
-            console.log("cancel pressed");
+
             formClose = true;
             renderTask(allTasks);
         
@@ -335,14 +333,12 @@ function hideTaskForm() {
 const deleteAllBtn = document.querySelector("button.delete-all");
 deleteAllBtn.addEventListener("click", () => {
     let decision = confirm("You want to delete all of your todos ?"); 1
-    console.log(decision);
     if (decision) {
         allTasks = []
         localStorage.setItem("allTasks", JSON.stringify(allTasks));
         uniqueId = 0
         localStorage.setItem("uniqueId", 0);
-        console.log("After delete", allTasks);
-        console.log("Unique id",uniqueId);
+        deleteAllProjects();
         renderTask(allTasks);
     }
 })
