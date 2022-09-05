@@ -1,43 +1,31 @@
-import editIcon from './imgs/edit.png';
-import projDeleteIconSrc from './imgs/proDelete.png'
-import { format } from 'date-fns';
-import { Project } from './project'
-import { activateCheckboxes, activateEditBtns } from './index';
-// show new form
-// const containerAdd = document.querySelector("container-addTaskForm");
+import editIcon from "./imgs/edit.png";
+import projDeleteIconSrc from "./imgs/proDelete.png";
+import { format } from "date-fns";
+import { Project } from "./project";
+import { activateCheckboxes, activateEditBtns } from "./index";
 
-// form open ->  track if any form is open -> open only one form at a time
+const allProjects = document.querySelector(".all-projects"); // refer to that  of tasks
 
-
-const allProjects = document.querySelector('.all-projects');  // refer to that content 
 // add event listener to edit-btn
-const editBtn = document.querySelectorAll('.edit-btn');
-const projectAddForm = document.querySelector('.project-add-form')
+const projectAddForm = document.querySelector(".project-add-form");
 
-const projectFormbtn = document.querySelector('img.project-add-img');
-const projectPlusbtn = document.querySelector('button.project-add-btn');
-const projectCancelbtn = document.querySelector('button.project-cancel-btn');
+const projectFormbtn = document.querySelector("img.project-add-img");
+const projectPlusbtn = document.querySelector("button.project-add-btn");
+const projectCancelbtn = document.querySelector("button.project-cancel-btn");
 
 let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr")) || [];
 
 projectPlusbtn.addEventListener("click", addProject);
 projectCancelbtn.addEventListener("click", hideProjectForm);
 
-
-
 projectFormbtn.addEventListener("click", () => {
-    projectAddForm.classList.remove('hidden');
+    projectAddForm.classList.remove("hidden");
     projectAddForm.querySelector("input").focus();
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.style.height = "300px";
-
-
 });
 
 let projectUid = localStorage.getItem("projectUid") || 0;
-let currentProjectPage = null;
-
-
 
 function addProject() {
     if (allProjectArr.length == 0) {
@@ -45,83 +33,73 @@ function addProject() {
         localStorage.setItem("projectUid", 0);
     }
     const projName = projectAddForm.querySelector("input").value;
-    if (!allProjectArr.find(i => i.projectName == projName)) {
+    if (!allProjectArr.find((i) => i.projectName == projName)) {
         let myProject = Project(projName, projectUid);
-        projectUid++; localStorage.setItem("projectUid", projectUid);
+        projectUid++;
+        localStorage.setItem("projectUid", projectUid);
         allProjectArr.push(myProject);
 
         localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
-        projectAddForm.classList.add('hidden');
+        projectAddForm.classList.add("hidden");
         // console.log(allProjectArr);
         renderProjects(allProjectArr);
-        updatePagesEffect();
+
         let nodelist = document.querySelectorAll(".projects-container .proj-index");
         let newCreatedProject = nodelist[nodelist.length - 1];
         newCreatedProject.click();
         newCreatedProject.scrollIntoView();
         hideProjectForm();
-    }
-    else {
+    } else {
         alert(" This Project Name is already used !");
         projectAddForm.querySelector("input").value = "";
         projectAddForm.querySelector("input").focus();
     }
-
-
 }
 
 function hideProjectForm() {
-    projectAddForm
-    projectAddForm.classList.add('hidden');
+
+    projectAddForm.classList.add("hidden");
     projectAddForm.querySelector("input").value = "";
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.style.height = "400px";
-
-
-
-
 }
 
 function updatePagesEffect() {
     const pages = document.querySelectorAll('[class*="-index"]');
-    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
-
+    const projectDeleteBtns = document.querySelectorAll(".pro-delete");
+    console.log("called me");
     pages.forEach((page) => {
         page.addEventListener("click", () => {
             pages.forEach((page) => {
-
-                page.classList.remove("bg-white");
-                projectDeleteBtns.forEach(pd => {
-                    pd.classList.add("invisible");
-                })
-
-
-
+                console.log(page, "removed white background");
+                 page.classList.remove("bg-white");
+                if (!page.textContent.includes("Home")) {
+                    projectDeleteBtns.forEach((pd) => {
+                        pd.classList.add("invisible");
+                    });
+                }
             });
             page.classList.add("bg-white");
-            // currentProjectPage = allProjectArr.find(i => i.projectUid == page.getAttribute("project-id"));
-            // console.log(page.getAttribute("project-id"));
-            // renderProjects(allProjectArr, currentProjectPage)
-            page.parentNode.querySelector(".pro-delete").classList.remove("invisible");
-
-
+            console.log(page, "SHOW BUTTON");
+            if (!page.textContent.includes("Home"))
+                page.parentNode
+                    .querySelector(".pro-delete")
+                    .classList.remove("invisible");
         });
     });
 }
-
 
 // currentPageName
 // const currentProjectName = document.querySelector(".currentPageName");
 // console.log(currentProjectName.textContent);
 
 function renderProjects(allProjectArr, currentProjectPage = null) {
-
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.textContent = "";
     if (allProjectArr.length > 0) {
         // render Home page when currentProject is null
 
-        allProjectArr.forEach(project => {
+        allProjectArr.forEach((project) => {
             let thisProjName = project.projectName;
             projectContainer.innerHTML += `<div class="text-center flex justify-around  items-center w-full ">
                 <div class="proj-index w-[75%] break-words  last:bg-red-400
@@ -129,49 +107,42 @@ rounded-md hover:cursor-pointer py-1 " project-id="${project.projectUid}">${this
                 <img class="pro-delete hover:cursor-pointer invisible hover:visible h-[14px]"  title="Delete" src="" alt="pro-delete">
                 
             </div>
-            <hr>`
-        })
+            <hr>`;
+        });
         renderProjectDeleteIcon();
         activateDeleteIcon();
         updatePagesEffect();
-
-
     }
 }
 
 function activateDeleteIcon() {
-    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
-    projectDeleteBtns.forEach(pd => {
+    const projectDeleteBtns = document.querySelectorAll(".pro-delete");
+    projectDeleteBtns.forEach((pd) => {
         pd.addEventListener("click", (e) => {
-            console.log("inside click arr", allProjectArr);
             let name = e.target.parentNode.querySelector(".proj-index").textContent;
 
-
-            allProjectArr = allProjectArr.filter(i => {
-
+            allProjectArr = allProjectArr.filter((i) => {
                 return i.projectName != name;
-
-            })
-            console.log(allProjectArr);
+            });
             localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
             renderProjects(allProjectArr);
-
-        })
-    })
+            const homePage = document.querySelector(".home-index");
+            homePage.click();
+        });
+    });
 }
 
 function renderProjectDeleteIcon() {
-    const projectDeleteBtns = document.querySelectorAll('.pro-delete');
-    projectDeleteBtns.forEach(pd => {
+    const projectDeleteBtns = document.querySelectorAll(".pro-delete");
+    projectDeleteBtns.forEach((pd) => {
         pd.src = projDeleteIconSrc;
-    })
+    });
 }
 
 function renderTask(allTasks) {
     //clear allproject div
 
-    allProjects.innerHTML = '';
-    allProjects.innerHTML = "<div class='flex justify-center'> No Todo enjoy your time ! 🍻</div>"
+    allProjects.innerHTML = "";
 
     //add form to allProjects div
     allProjects.innerHTML = `<div
@@ -220,22 +191,29 @@ function renderTask(allTasks) {
                 </div>`;
     if (allTasks.length > 0) {
         // add all tasks from allTasks array to allProjects div
-        allTasks.forEach(task => {
-            const taskElement = document.createElement('div');
-            taskElement.classList.add('task', 'w-[90%]', 'flex-row', 'gap-6', 'mt-2', 'flex', 'items-center', 'mx-2');
+        allTasks.forEach((task) => {
+            const taskElement = document.createElement("div");
+            taskElement.classList.add(
+                "task",
+                "w-[90%]",
+                "flex-row",
+                "gap-6",
+                "mt-2",
+                "flex",
+                "items-center",
+                "mx-2"
+            );
             taskElement.style.gap = "20px";
-            taskElement.setAttribute('data-id', task.uniqueId);
+            taskElement.setAttribute("data-id", task.uniqueId);
 
             let priorityColor;
 
-            if (task.priorityValue === 'high') {
-                priorityColor = 'red';
-            }
-            else if (task.priorityValue === 'medium') {
-                priorityColor = 'blue';
-            }
-            else {
-                priorityColor = 'green';
+            if (task.priorityValue === "high") {
+                priorityColor = "red";
+            } else if (task.priorityValue === "medium") {
+                priorityColor = "blue";
+            } else {
+                priorityColor = "green";
             }
             let taskDate = new Date(task.dueDate);
             let formattedDate = format(taskDate, "dd MMM yyyy");
@@ -249,54 +227,26 @@ function renderTask(allTasks) {
                         <img src="" alt="edit" class="hidden md:flex h-[20px]  edit-btn hover:cursor-pointer hover:mb-1" data-id=${task.uniqueId}></img>
 
                         `;
-            taskElement.querySelector('.task-info').style.borderColor = priorityColor;
-            taskElement.querySelector('.edit-btn').src = editIcon;
+            taskElement.querySelector(".task-info").style.borderColor = priorityColor;
+            taskElement.querySelector(".edit-btn").src = editIcon;
             allProjects.appendChild(taskElement);
-        }
-
-        );
-        activateCheckboxes()
+        });
+        activateCheckboxes();
         activateEditBtns();
     }
-
-
-
 }
 
 function deleteAllProjects() {
-    allProjectArr = []
+    allProjectArr = [];
     localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
     renderProjects(allProjectArr);
+    const homePage = document.querySelector(".home-index");
+    console.log(homePage);
+    homePage.click();
 }
 
-
-// track what is the current page and change the content accordingly 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// track what is the current page and change the content accordingly
 
 renderProjects(allProjectArr);
-updatePagesEffect()
 
-
-export { renderTask, deleteAllProjects };
+export { renderTask, deleteAllProjects, allProjectArr };

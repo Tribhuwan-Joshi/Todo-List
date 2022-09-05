@@ -1,6 +1,6 @@
 /* Imports css */
 import "./style.css";
-import { renderTask,deleteAllProjects } from "./domManipulation.js";
+import { renderTask, deleteAllProjects, allProjectArr } from "./domManipulation.js";
 
 // import classes
 import { Task } from './task'
@@ -9,8 +9,6 @@ import { Task } from './task'
 import Icon from "./imgs/icon.png";
 const linkIcon = document.querySelector('link[rel="icon"]');
 linkIcon.href = Icon;
-
-
 
 /* header style and object logic */
 
@@ -54,11 +52,6 @@ const projectAddImg = document.querySelector(".project-add-img");
 projectAddImg.src = projectAdd;
 
 
-// Project bars onClick effect
-
-
-
-
 /* Main { header and Container} */
 // import editSrc from "../src/imgs/edit.png";
 import taskAddIcon from "../src/imgs/taskAdd.png";
@@ -67,10 +60,13 @@ const addTaskIcon = document.querySelector("img.add-task-icon")
 addTaskIcon.src = taskAddIcon;
 addTaskDiv.addEventListener("click", showAddForm);
 
-// tasks arr
+// tasks arr and their uniqueId 
 let allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 let uniqueId = (allTasks.length) ? localStorage.getItem("uniqueId") : 0;
 
+
+
+// Dom object for adding new tasks form
 
 const taskName = document.querySelector(".container-addTask input#task-name");
 const taskNote = document.querySelector(".container-addTask input#task-note");
@@ -87,47 +83,47 @@ const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbo
 const projects = document.querySelector(".all-projects");
 
 
-let priorityValue;
+
 let formClose = true;
 // keep track of any editForm or AddForm is opened
 
 
 function addnewTask() {
-   
+
     if (allTasks.length < 1) {
         uniqueId = 0;
         localStorage.setItem("uniqueId", 0);
     }
-    
-    const taskName = document.querySelector(".container-addTask input#task-name");
-    const taskNote = document.querySelector(".container-addTask input#task-note");
+
+    const taskNameValue = document.querySelector(".container-addTask input#task-name").value.trim();
+    const taskNoteValue = document.querySelector(".container-addTask input#task-note").value.trim();
     const priority = document.querySelectorAll(
         '.container-addTask input[name="priority"]'
     );
-
+    let priorityValue;
     taskName.select();
-    const dueDate = document.querySelector(".container-addTask input#due-date");
+    const dueDateValue = document.querySelector(".container-addTask input#due-date").value;
     for (const i of priority) {
         if (i.checked) {
             priorityValue = i.value;
         }
     }
 
-    if (!(taskName.value.trim() && priorityValue && dueDate.value)) {
+    if (!(taskNameValue && priorityValue && dueDateValue)) {
         alert("Please fill required fields");
     } else {
 
         let myTask = new Task(
-            taskName.value.trim(),
-            taskNote.value.trim(),
+            taskNameValue,
+            taskNoteValue,
             priorityValue,
-            dueDate.value,
+            dueDateValue,
             uniqueId++
         );
         allTasks.push(myTask);
         localStorage.setItem("allTasks", JSON.stringify(allTasks));
         localStorage.setItem("uniqueId", uniqueId)
-        
+
 
         hideTaskForm();
 
@@ -160,7 +156,7 @@ function activateCheckboxes() {
                 localStorage.setItem("allTasks", JSON.stringify(allTasks));
                 let element = document.querySelector(`div[data-id="${data_id}"]`);
                 element.parentNode.removeChild(element);
-         
+
             }
             );
         }
@@ -174,7 +170,7 @@ function activateEditBtns() {
         editBtns.forEach(btn => {
             btn.addEventListener("click", (e) => {
                 hideTask(e.target.getAttribute("data-id"));
-               
+
             }
             )
         }
@@ -188,7 +184,7 @@ function hideTask(id) {
 
         const taskDiv = document.querySelector(`.task[data-id='${id}']`);
         let editedTask = allTasks.find((t) => t.uniqueId == id);
-    
+
         taskDiv.classList = ""
 
         let classlist = "container-addTask w-auto mb-2 mt-2 md:w-[82%] mx-10 h-max p-2 bg-yellow-200 flex-col md:gap-3 rounded-md px-3 flex".split(" ");
@@ -248,7 +244,7 @@ function hideTask(id) {
         const len = taskNamediv.value.length;
         taskNamediv.setSelectionRange(len, len)
         taskNamediv.focus();
-  
+
 
         const saveBtn = document.querySelector("button.save-btn");
         const cancelEdit = document.querySelector("button.cancel-edit-btn");
@@ -267,18 +263,18 @@ function hideTask(id) {
             editedTask.dueDate = currDate;
             editedTask.priorityValue = currPrior;
             localStorage.setItem("allTasks", JSON.stringify(allTasks));
-          
+
             formClose = true;
             renderTask(allTasks);
-        
-        
-        
+
+
+
         });
         cancelEdit.addEventListener("click", () => {
 
             formClose = true;
             renderTask(allTasks);
-        
+
         })
     }
 }
@@ -292,7 +288,7 @@ function showAddForm() {
         const containerAdd = document.querySelector(".container-addTask");
         containerAdd.classList.remove("hidden");
         containerAdd.classList.add("flex");
-        
+
         // set autofocus on input element
         const taskName = document.querySelector(".container-addTask input#task-name");
         taskName.focus();
@@ -332,14 +328,16 @@ function hideTaskForm() {
 // delete all Tasks
 const deleteAllBtn = document.querySelector("button.delete-all");
 deleteAllBtn.addEventListener("click", () => {
-    let decision = confirm("You want to delete all of your todos ?"); 1
-    if (decision) {
-        allTasks = []
-        localStorage.setItem("allTasks", JSON.stringify(allTasks));
-        uniqueId = 0
-        localStorage.setItem("uniqueId", 0);
-        deleteAllProjects();
-        renderTask(allTasks);
+    if (allTasks.length || allProjectArr.length) {
+        let decision = confirm("You want to delete all of your todos ?"); 1
+        if (decision) {
+            allTasks = []
+            localStorage.setItem("allTasks", JSON.stringify(allTasks));
+            uniqueId = 0
+            localStorage.setItem("uniqueId", 0);
+            deleteAllProjects();
+            renderTask(allTasks);
+        }
     }
 })
 
