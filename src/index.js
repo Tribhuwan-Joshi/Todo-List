@@ -351,8 +351,10 @@ function hideTask(id) {
             editedTask.taskNote = currentNote;
             editedTask.dueDate = currDate;
             editedTask.priorityValue = currPrior;
-            localStorage.setItem("allTasks", JSON.stringify(allTasks));
-
+            if (currentPageName == "Home")
+                localStorage.setItem("allTasks", JSON.stringify(allTasks));
+            else
+                localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
             formClose = true;
             renderTask(currentPageName);
 

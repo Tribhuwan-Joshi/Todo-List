@@ -13,7 +13,8 @@ const projectFormbtn = document.querySelector("img.project-add-img");
 const projectPlusbtn = document.querySelector("button.project-add-btn");
 const projectCancelbtn = document.querySelector("button.project-cancel-btn");
 
-let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr")) || [];
+let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr") )|| [];
+console.log(allProjectArr);
 
 projectPlusbtn.addEventListener("click", addProject);
 projectCancelbtn.addEventListener("click", hideProjectForm);
@@ -154,12 +155,12 @@ function getProjectByName(currentPageName) {
 }
 
 function renderTask(currentPageName) {
-    
-    console.log(currentPageName," inside renderTasks");
+
+    console.log(currentPageName, " inside renderTasks");
     //clear allproject div
     let tempArr = getTaskArr(currentPageName);
     // console.log("CurrentPage inside renderTask",currentPageName);
-   
+
     allProjects.innerHTML = "";
 
     //add form to allProjects div
@@ -267,4 +268,4 @@ function deleteAllProjects() {
 
 renderProjects(allProjectArr);
 
-export { renderTask, deleteAllProjects, allProjectArr, currentPageName,getProjectByName };
+export { renderTask, deleteAllProjects, allProjectArr, currentPageName, getProjectByName };
