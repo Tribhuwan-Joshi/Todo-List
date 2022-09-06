@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
     <link rel="icon" href="" />
-<script defer src="bundle.js?505dcf28bf381bf6708d"></script></head>
+<script defer src="bundle.js?fc4f40868ae779a1642a"></script></head>
 
 <body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
     <!-- header -->
     <div
-        class="header row-span-1 col-start-1 col-end-3 bg-white border-b border-b-black flex px-4 justify-center items-center">
+        class="header row-span-1 col-start-1 col-end-3 bg-[#EEE3CB] border-b border-b-black flex px-4 justify-center items-center">
         <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a
                 href="https://github.com/Tribhuwan-Joshi" target="_blank"><img src="" alt=""
                     class="github-icon w-[24px] h-auto hover:cursor-pointer "></a>
@@ -28,10 +28,11 @@
 
     <!-- navbar -->
     <div
-        class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-green-300 flex flex-col pt-10 px-2 gap-7 min-w-[230px] text-xl tracking-wide border-r border-r-black">
-        <div class="flex home-index gap-4 justify-center items-center w-max mx-auto bg-white px-3 py-2  rounded-md">
+        class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-[#D0C9C0] flex flex-col pt-10 px-2 gap-7 min-w-[230px] text-xl tracking-wide border-r border-r-black">
+        <div class="flex  gap-4  items-center w-full   px-3 py-2 ">
             <img class="home-img h-[22px]" src="" alt="home" />
-            <div class="hover:cursor-pointer  hover:text-gray-700 text-2xl">Home</div>
+            <div class="hover:cursor-pointer home-index px-2 py-1 w-[75%] rounded-md bg-white text-center text-2xl">Home
+            </div>
         </div>
 
 
@@ -41,13 +42,16 @@
             <img class="project-add-img mr-2 hover:mb-1 mt-1 h-[28px] cursor-pointer " src="" alt="add project"
                 title="Add project" />
         </div>
-        <div class="project-add-form hidden -mt-6 text-center text-sm  border-4 bg-orange-300 border-yellow-400 py-1">
-            <input type="text" spellcheck="false" class=" outline-none  px-1 w-[90%] text-base my-2 mx-1 rounded-sm"  name="project-name">
+        <div class="project-add-form hidden -mt-6 text-center text-sm  border-4 bg-orange-300 border-white py-1">
+            <input type="text" spellcheck="false" class=" outline-none  px-1 w-[90%] text-base my-2 mx-1 rounded-sm"
+                name="project-name">
             <div class="btns flex justify-around">
-                <button class="project-add-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-green-600 active:bg-green-700 hover:bg-green-500">Add</button>
-                <button class="project-cancel-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-red-600 active:bg-red-700 hover:bg-red-500">Cancel</button>
+                <button
+                    class="project-add-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-green-600 active:bg-green-700 hover:bg-green-500">Add</button>
+                <button
+                    class="project-cancel-btn rounded-sm  px-2 py-1  text-white border-1 border-black bg-red-600 active:bg-red-700 hover:bg-red-500">Cancel</button>
             </div>
-            
+
         </div>
 
         <div
@@ -56,7 +60,7 @@
                 <div class="gym-index w-[85%]  
 rounded-md hover:cursor-pointer py-1">Gym</div>
                 <img class="pro-delete hover:cursor-pointer hidden h-[16px]" alt="pro-delete">
-                
+
             </div>
 
         </div>
@@ -69,9 +73,10 @@ rounded-md hover:cursor-pointer py-1">Gym</div>
     <!-- main -->
     <div class="main col-start-2 row-start-2 h-[93vh] flex justify-center items-center bg-blue-200 ">
         <div
-            class="content w-[85%] border border-black bg-white rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
+            class="content w-[85%] border border-black bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
             <div class="top-bar flex page-name justify-between">
-                <div class="text-4xl font-semibold">Home</div>
+                <div class="text-4xl currentPageName font-semibold">Home
+                </div>
                 <div
                     class="addTask-btn flex w-fit px-2 py-1 rounded hover:bg-slate-300 hover:cursor-pointer gap-2 items-center">
                     <img src="" class="add-task-icon h-[16px]" alt="" />
