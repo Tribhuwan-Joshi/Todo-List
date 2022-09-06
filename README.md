@@ -17,6 +17,6 @@ A Todo list  to add your tasks. Organize your life. Achieve more every day.
 - [Webpack 5](https://webpack.js.org/guides/getting-started/)
 - [Npm](https://www.npmjs.com/)
 
-
+![showcase](https://github.com/Tribhuwan-Joshi/Todo-List/blob/main/src/imgs/showcase.png)
          
 
