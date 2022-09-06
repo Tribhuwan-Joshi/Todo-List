@@ -2,11 +2,11 @@ import editIcon from "./imgs/edit.png";
 import projDeleteIconSrc from "./imgs/proDelete.png";
 import { format } from "date-fns";
 import { Project } from "./project";
-import { activateCheckboxes, activateEditBtns } from "./index";
+import { activateCheckboxes, activateEditBtns, allTasks } from "./index";
+import { changeContent } from './projectsDOM'
 
 const allProjects = document.querySelector(".all-projects"); // refer to that  of tasks
 
-// add event listener to edit-btn
 const projectAddForm = document.querySelector(".project-add-form");
 
 const projectFormbtn = document.querySelector("img.project-add-img");
@@ -50,7 +50,7 @@ function addProject() {
         newCreatedProject.scrollIntoView();
         hideProjectForm();
     } else {
-        alert(" This Project Name is already used !");
+        alert(" Project name must be different !");
         projectAddForm.querySelector("input").value = "";
         projectAddForm.querySelector("input").focus();
     }
@@ -63,16 +63,17 @@ function hideProjectForm() {
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.style.height = "400px";
 }
-
+let currentPageName = "Home";
 function updatePagesEffect() {
+
     const pages = document.querySelectorAll('[class*="-index"]');
     const projectDeleteBtns = document.querySelectorAll(".pro-delete");
     console.log("called me");
     pages.forEach((page) => {
         page.addEventListener("click", () => {
             pages.forEach((page) => {
-                console.log(page, "removed white background");
-                 page.classList.remove("bg-white");
+
+                page.classList.remove("bg-white");
                 if (!page.textContent.includes("Home")) {
                     projectDeleteBtns.forEach((pd) => {
                         pd.classList.add("invisible");
@@ -80,20 +81,21 @@ function updatePagesEffect() {
                 }
             });
             page.classList.add("bg-white");
-            console.log(page, "SHOW BUTTON");
+            currentPageName = page.textContent.trim();
             if (!page.textContent.includes("Home"))
                 page.parentNode
                     .querySelector(".pro-delete")
                     .classList.remove("invisible");
+            else currentPageName = "Home";
+
+            changeContent(currentPageName);
+            renderTask(currentPageName);
         });
     });
 }
 
-// currentPageName
-// const currentProjectName = document.querySelector(".currentPageName");
-// console.log(currentProjectName.textContent);
 
-function renderProjects(allProjectArr, currentProjectPage = null) {
+function renderProjects(allProjectArr) {
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.textContent = "";
     if (allProjectArr.length > 0) {
@@ -139,9 +141,25 @@ function renderProjectDeleteIcon() {
     });
 }
 
-function renderTask(allTasks) {
-    //clear allproject div
+function getTaskArr(currentPageName) {
+    if (currentPageName == "Home") return allTasks
+    else {
+        let project = getProjectByName(currentPageName);
+        return project.projectTasksList
+    }
+}
+function getProjectByName(currentPageName) {
+    return allProjectArr.find(i => i.projectName == currentPageName)
 
+}
+
+function renderTask(currentPageName) {
+    
+    console.log(currentPageName," inside renderTasks");
+    //clear allproject div
+    let tempArr = getTaskArr(currentPageName);
+    // console.log("CurrentPage inside renderTask",currentPageName);
+   
     allProjects.innerHTML = "";
 
     //add form to allProjects div
@@ -189,9 +207,9 @@ function renderTask(allTasks) {
                         </div>
                     </div>
                 </div>`;
-    if (allTasks.length > 0) {
+    if (tempArr.length > 0) {
         // add all tasks from allTasks array to allProjects div
-        allTasks.forEach((task) => {
+        tempArr.forEach((task) => {
             const taskElement = document.createElement("div");
             taskElement.classList.add(
                 "task",
@@ -249,4 +267,4 @@ function deleteAllProjects() {
 
 renderProjects(allProjectArr);
 
-export { renderTask, deleteAllProjects, allProjectArr };
+export { renderTask, deleteAllProjects, allProjectArr, currentPageName,getProjectByName };

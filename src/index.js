@@ -1,6 +1,6 @@
 /* Imports css */
 import "./style.css";
-import { renderTask, deleteAllProjects, allProjectArr } from "./domManipulation.js";
+import { renderTask, deleteAllProjects, allProjectArr, currentPageName, getProjectByName } from "./domManipulation.js";
 
 // import classes
 import { Task } from './task'
@@ -55,6 +55,9 @@ projectAddImg.src = projectAdd;
 /* Main { header and Container} */
 // import editSrc from "../src/imgs/edit.png";
 import taskAddIcon from "../src/imgs/taskAdd.png";
+import bgImgSrc from './imgs/bgImg.jpg'
+const main = document.querySelector('.main');
+main.style.backgroundImage = `url(${bgImgSrc})`;
 const addTaskDiv = document.querySelector(".addTask-btn");
 const addTaskIcon = document.querySelector("img.add-task-icon")
 addTaskIcon.src = taskAddIcon;
@@ -88,9 +91,55 @@ let formClose = true;
 // keep track of any editForm or AddForm is opened
 
 
-function addnewTask() {
+function showAddForm() {
+    if (
+        formClose
+    ) {
+        formClose = false;
+        const containerAdd = document.querySelector(".container-addTask");
+        containerAdd.classList.remove("hidden");
+        containerAdd.classList.add("flex");
 
-    if (allTasks.length < 1) {
+        // set autofocus on input element
+        const taskName = document.querySelector(".container-addTask input#task-name");
+        taskName.focus();
+        const addBtn = document.querySelector(".container-addTask .add-btn");
+        addBtn.addEventListener("click", addnewTask);
+        const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
+        cancelBtn.addEventListener("click", hideTaskForm);
+    }
+}
+
+function hideTaskForm() {
+    formClose = true;
+    const containerAdd = document.querySelector(".container-addTask");
+    containerAdd.classList.remove("flex");
+    containerAdd.classList.add("hidden");
+    const addBtn = document.querySelector(".container-addTask .add-btn");
+    addBtn.addEventListener("click", addnewTask);
+    const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
+    cancelBtn.addEventListener("click", hideTaskForm);
+
+    const taskName = document.querySelector(".container-addTask input#task-name");
+    const taskNote = document.querySelector(".container-addTask input#task-note");
+    const priority = document.querySelectorAll(
+        '.container-addTask input[name="priority"]'
+    );
+    const dueDate = document.querySelector(".container-addTask input#due-date");
+
+    taskName.value = "";
+    taskNote.value = "";
+    dueDate.value = "";
+}
+
+function addnewTask() {
+    let tempArr;
+    if (currentPageName == "Home") tempArr = allTasks;
+    else {
+        let obj = getProjectByName(currentPageName);
+        tempArr = obj.projectTasksList;
+    }
+    if (tempArr.length < 1) {
         uniqueId = 0;
         localStorage.setItem("uniqueId", 0);
     }
@@ -110,7 +159,7 @@ function addnewTask() {
     }
 
     if (!(taskNameValue && priorityValue && dueDateValue)) {
-        alert("Please fill required fields");
+        alert("Please fill all required fields");
     } else {
 
         let myTask = new Task(
@@ -120,15 +169,26 @@ function addnewTask() {
             dueDateValue,
             uniqueId++
         );
-        allTasks.push(myTask);
-        localStorage.setItem("allTasks", JSON.stringify(allTasks));
+        if (currentPageName != "Home") {
+            let currentProjectObj = getProjectByName(currentPageName);
+            currentProjectObj.projectTasksList.push(myTask);
+
+            localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+        }
+        else {
+            tempArr.push(myTask);
+            
+            localStorage.setItem("allTasks", JSON.stringify(tempArr));
+        }
         localStorage.setItem("uniqueId", uniqueId)
+
+
 
 
         hideTaskForm();
 
         renderTask(
-            allTasks
+            currentPageName
         );
 
 
@@ -137,9 +197,23 @@ function addnewTask() {
 }
 
 
+function getTaskById(id) {
+    if (currentPageName == "Home")
+        return allTasks.find((t) => t.uniqueId == id)
+    else {
+        let obj = getProjectByName(currentPageName);
+        return obj.projectTasksList.find((t) => t.uniqueId == id);
+    }
+}
 
 function activateCheckboxes() {
-    if (allTasks.length > 0) {
+    let tempArr;
+    if (currentPageName == "Home") tempArr = allTasks;
+    else {
+        let obj = getProjectByName(currentPageName);
+        tempArr = obj.projectTasksList;
+    }
+    if (tempArr.length > 0) {
         const checkboxes = document.querySelectorAll('.task .checkbox input[type=checkbox]');
 
         checkboxes.forEach((checkbox) => {
@@ -150,10 +224,19 @@ function activateCheckboxes() {
 
 
                 // remove checked task
-                allTasks = allTasks.filter((task) => {
+                tempArr = tempArr.filter((task) => {
                     return task.uniqueId != data_id;
                 });
-                localStorage.setItem("allTasks", JSON.stringify(allTasks));
+                if (currentPageName == "Home"){
+                    localStorage.setItem("allTasks", JSON.stringify(tempArr));
+            }
+                else {
+                    getProjectByName(currentPageName).projectTasksList = tempArr;
+                    localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
+                    console.log(allProjectArr);
+                }
+                
+
                 let element = document.querySelector(`div[data-id="${data_id}"]`);
                 element.parentNode.removeChild(element);
 
@@ -165,7 +248,13 @@ function activateCheckboxes() {
 }
 
 function activateEditBtns() {
-    if (allTasks.length > 0) {
+    let tempArr;
+    if (currentPageName == "Home") tempArr = allTasks;
+    else {
+        let obj = getProjectByName(currentPageName);
+        tempArr = obj.projectTasksList;
+    }
+    if (tempArr.length > 0) {
         const editBtns = document.querySelectorAll(".task .edit-btn");
         editBtns.forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -183,7 +272,7 @@ function hideTask(id) {
         formClose = false;
 
         const taskDiv = document.querySelector(`.task[data-id='${id}']`);
-        let editedTask = allTasks.find((t) => t.uniqueId == id);
+        let editedTask = getTaskById(id);
 
         taskDiv.classList = ""
 
@@ -265,7 +354,7 @@ function hideTask(id) {
             localStorage.setItem("allTasks", JSON.stringify(allTasks));
 
             formClose = true;
-            renderTask(allTasks);
+            renderTask(currentPageName);
 
 
 
@@ -273,56 +362,17 @@ function hideTask(id) {
         cancelEdit.addEventListener("click", () => {
 
             formClose = true;
-            renderTask(allTasks);
+            renderTask(currentPageName);
 
         })
     }
 }
 
 
-function showAddForm() {
-    if (
-        formClose
-    ) {
-        formClose = false;
-        const containerAdd = document.querySelector(".container-addTask");
-        containerAdd.classList.remove("hidden");
-        containerAdd.classList.add("flex");
-
-        // set autofocus on input element
-        const taskName = document.querySelector(".container-addTask input#task-name");
-        taskName.focus();
-        const addBtn = document.querySelector(".container-addTask .add-btn");
-        addBtn.addEventListener("click", addnewTask);
-        const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
-        cancelBtn.addEventListener("click", hideTaskForm);
-    }
-}
 
 
 
 
-function hideTaskForm() {
-    formClose = true;
-    const containerAdd = document.querySelector(".container-addTask");
-    containerAdd.classList.remove("flex");
-    containerAdd.classList.add("hidden");
-    const addBtn = document.querySelector(".container-addTask .add-btn");
-    addBtn.addEventListener("click", addnewTask);
-    const cancelBtn = document.querySelector(".container-addTask .cancel-btn");
-    cancelBtn.addEventListener("click", hideTaskForm);
-
-    const taskName = document.querySelector(".container-addTask input#task-name");
-    const taskNote = document.querySelector(".container-addTask input#task-note");
-    const priority = document.querySelectorAll(
-        '.container-addTask input[name="priority"]'
-    );
-    const dueDate = document.querySelector(".container-addTask input#due-date");
-
-    taskName.value = "";
-    taskNote.value = "";
-    dueDate.value = "";
-}
 
 
 // delete all Tasks
@@ -336,13 +386,13 @@ deleteAllBtn.addEventListener("click", () => {
             uniqueId = 0
             localStorage.setItem("uniqueId", 0);
             deleteAllProjects();
-            renderTask(allTasks);
+            renderTask(currentPageName);
         }
     }
 })
 
-renderTask(allTasks);
-export { activateCheckboxes, activateEditBtns }
+renderTask(currentPageName);
+export { activateCheckboxes, activateEditBtns, allTasks }
 
 
 
