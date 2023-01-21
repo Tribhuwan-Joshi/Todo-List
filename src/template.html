@@ -9,9 +9,11 @@
     <link rel="icon" href="" />
 </head>
 
-<body class="grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr] h-full">
+<body class=" h-full">
+    <div class="bg-red-200 h-full w-full absolute flex flex-col justify-center gap-4 items-center"> <h1 class="text-2xl font-semibold">Please Sign In To Continue</h1> <button class="sign-in border bg-gray-200 active:bg-gray-300  border-black  text-2xl rounded-md  p-2">Sign In</button>
     <!-- header -->
-    <div
+    <div class="full-main hidden grid-cols-[1fr_6fr] grid-rows-[1fr_10fr]">
+     <div
         class="header row-span-1 col-start-1 col-end-3 bg-[#EEE3CB] border-b border-b-black flex px-4 justify-center items-center">
         <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a
                 href="https://github.com/Tribhuwan-Joshi" target="_blank"><img src="" alt=""
@@ -24,10 +26,15 @@
             Todoer
             <span class="mt-2 font-light text-base">~ one step at a time</span>
         </div>
+        <div class="user-data flex gap-8 fixed right-10">
+            <div class="w-[30px] h-[30px] rounded-[100%] bg-gray-600"></div>
+            <button class="sign-out border bg-gray-200 active:bg-gray-300  border-black text-sm px-1">Sign Out</button>
+            
+        </div>
     </div>
 
     <!-- navbar -->
-    <div
+   <div
         class="navbar col-span-1 row-start-2  font-[sans-serif] font-light bg-[#D0C9C0] flex flex-col pt-10 px-2 gap-7 min-w-[230px] text-xl tracking-wide border-r border-r-black">
         <div class="flex  gap-4  items-center w-full   px-3 py-2 ">
             <img class="home-img h-[22px]" src="" alt="home" />
@@ -68,10 +75,10 @@ rounded-md hover:cursor-pointer py-1">Gym</div>
             class="delete-all bg-red-500 mt-auto  mb-[10px] w-fit py-1 px-4 text-lg mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
             Delete All
         </button>
-    </div>
+    </div> -->
 
     <!-- main -->
-    <div class="main col-start-2 row-start-2 h-[93vh] flex justify-center items-center bg-blue-200 ">
+     <div class="main col-start-2 row-start-2 h-[93vh] flex justify-center items-center bg-blue-200 ">
         <div
             class="content w-[85%] border border-black bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
             <div class="top-bar flex page-name justify-between">
@@ -134,7 +141,9 @@ rounded-md hover:cursor-pointer py-1">Gym</div>
 
             </div>
         </div>
+    </div> 
     </div>
+  
 </body>
 
 </html>
