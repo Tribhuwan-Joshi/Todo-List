@@ -28,6 +28,8 @@ projectFormbtn.addEventListener("click", () => {
 
 let projectUid = localStorage.getItem("projectUid") || 0;
 
+
+// add project to projectlists
 function addProject() {
     if (allProjectArr.length == 0) {
         projectUid = 0;
@@ -57,6 +59,8 @@ function addProject() {
     }
 }
 
+
+// hide project form to add new project
 function hideProjectForm() {
 
     projectAddForm.classList.add("hidden");
@@ -64,7 +68,12 @@ function hideProjectForm() {
     const projectContainer = document.querySelector(".projects-container");
     projectContainer.style.height = "400px";
 }
+
+// keep track of the current Page 
 let currentPageName = "Home";
+
+
+// change the current Page ( switch between projects )
 function updatePagesEffect() {
 
     const pages = document.querySelectorAll('[class*="-index"]');
@@ -95,6 +104,7 @@ function updatePagesEffect() {
     });
 }
 
+// Render all projects on navbar
 
 function renderProjects(allProjectArr) {
     const projectContainer = document.querySelector(".projects-container");
@@ -118,6 +128,9 @@ rounded-md hover:cursor-pointer py-1 " project-id="${project.projectUid}">${this
     }
 }
 
+
+// add eventlistener to delete icon of projects
+
 function activateDeleteIcon() {
     const projectDeleteBtns = document.querySelectorAll(".pro-delete");
     projectDeleteBtns.forEach((pd) => {
@@ -135,6 +148,8 @@ function activateDeleteIcon() {
     });
 }
 
+
+// add image source for delete icon of project 
 function renderProjectDeleteIcon() {
     const projectDeleteBtns = document.querySelectorAll(".pro-delete");
     projectDeleteBtns.forEach((pd) => {
@@ -142,6 +157,8 @@ function renderProjectDeleteIcon() {
     });
 }
 
+
+// By currentPage name get all the tasks objects for that page
 function getTaskArr(currentPageName) {
     if (currentPageName == "Home") return allTasks
     else {
@@ -149,10 +166,16 @@ function getTaskArr(currentPageName) {
         return project.projectTasksList
     }
 }
+
+
+// get the project object by page name
 function getProjectByName(currentPageName) {
     return allProjectArr.find(i => i.projectName == currentPageName)
 
 }
+
+
+// Render all the tasks of that page 
 
 function renderTask(currentPageName) {
 
@@ -255,6 +278,8 @@ function renderTask(currentPageName) {
     }
 }
 
+
+// Function to delete everything ( all todos and projects )
 function deleteAllProjects() {
     allProjectArr = [];
     localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
@@ -264,7 +289,7 @@ function deleteAllProjects() {
     homePage.click();
 }
 
-// track what is the current page and change the content accordingly
+
 
 renderProjects(allProjectArr);
 
