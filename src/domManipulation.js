@@ -14,7 +14,7 @@ const projectPlusbtn = document.querySelector("button.project-add-btn");
 const projectCancelbtn = document.querySelector("button.project-cancel-btn");
 
 let allProjectArr = JSON.parse(localStorage.getItem("allProjectArr") )|| [];
-console.log(allProjectArr);
+
 
 projectPlusbtn.addEventListener("click", addProject);
 projectCancelbtn.addEventListener("click", hideProjectForm);

@@ -9,6 +9,7 @@ const linkIcon = document.querySelector('link[rel="icon"');
 linkIcon.href = Icon;
 
 
+
 // Auth logic 
 
 import Cookies from "universal-cookie/cjs/Cookies";
@@ -16,8 +17,37 @@ import { auth } from "./firebase-config";
 import defaultpfp from "./imgs/bgImg.jpg"
 const cookies = new Cookies();
 
-// write to db
-import writeData from "./Data"
+// import db
+import { db } from "./firebase-config";
+import { collection,addDoc,getDocs } from "firebase/firestore";
+async function addDataToFirestore(){
+    try {
+        const docRef = await addDoc(collection(db, "users"), {
+          first: "Alan",
+          middle: "Mathison",
+          last: "Turing",
+          born: 1912
+        });
+      
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+}
+
+addDataToFirestore();
+
+async function getDataFirestore(){
+
+
+const querySnapshot = await getDocs(collection(db, "users"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${doc.data()}`);
+});
+
+}
+getDataFirestore();
+
 
 
 
@@ -176,6 +206,18 @@ addTaskDiv.addEventListener("click", showAddForm);
 // tasks arr and their uniqueId 
 let allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 let uniqueId = (allTasks.length) ? localStorage.getItem("uniqueId") : 0;
+/* const getData = async () => {
+  try {
+    const doc = await db.collection('collectionName').doc('docName').get();
+    return doc.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
+*/
+
+
+
 
 
 
