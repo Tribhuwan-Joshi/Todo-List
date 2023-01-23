@@ -12,6 +12,8 @@ linkIcon.href = Icon;
 // Auth logic 
 
 import Cookies from "universal-cookie/cjs/Cookies";
+import { auth } from "./firebase-config";
+import defaultpfp from "./imgs/bgImg.jpg"
 const cookies = new Cookies();
 
 
@@ -21,22 +23,50 @@ const signIn = document.querySelector(".sign-in");
 signIn.addEventListener("click",signInWithGoogle);
 
 
+/* 
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+});
+
+*/
 
 let isAuth = cookies.get('auth-token') || false;
 setAuth(isAuth);
+
+// when auth got changed
+
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const pfp = document.querySelector(".pfp");
+      const userPfp = auth.currentUser.photoURL || defaultpfp;
+      pfp.style.backgroundImage = `url(${userPfp})`;
+      pfp.classList.add("bg-cover");
+
+    }
+  });
+
 function setAuth(val){
     isAuth=val;
     const signInDiv = document.querySelector(".sign-in-div");
     const userHeader = document.querySelector(".user-data");
     const fullMain = document.querySelector(".full-main");
+
     if(isAuth){
 
         signInDiv.classList.add('hidden');
         signInDiv.classList.remove('flex');
         userHeader.classList.remove('hidden');
         userHeader.classList.add('flex');
-        fullMain.classList.remove("blur-sm")
+        fullMain.classList.remove("blur-sm");
+        // const userPfp = auth.currentUser.photoURL || defaultpfp;
+   
+        // pfp.classList.add(`bg-[${userPfp}]`,'bg-cover');
     }
+        
     else{
         signInDiv.classList.remove('hidden');
         userHeader.classList.add('hidden');
@@ -52,7 +82,7 @@ function getAuth(){
 
 // sign Out 
 import { signOut } from "firebase/auth";
-import { auth } from "./firebase-config";
+
 const signUserOut  = (async()=>{
     await signOut(auth);
     cookies.remove("auth-token");
