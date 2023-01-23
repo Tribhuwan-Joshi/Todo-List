@@ -4,7 +4,7 @@ import "./style.css";
 import { renderTask, deleteAllProjects, allProjectArr, currentPageName, getProjectByName } from "./domManipulation.js";
 
 // link Icon
-import Icon from "./imgs/bgImg.jpg";
+import Icon from "./imgs/Icon.png";
 const linkIcon = document.querySelector('link[rel="icon"');
 linkIcon.href = Icon;
 
@@ -15,6 +15,9 @@ import Cookies from "universal-cookie/cjs/Cookies";
 import { auth } from "./firebase-config";
 import defaultpfp from "./imgs/bgImg.jpg"
 const cookies = new Cookies();
+
+// write to db
+import writeData from "./Data"
 
 
 
@@ -43,8 +46,10 @@ auth.onAuthStateChanged((user) => {
     if (user) {
         const pfp = document.querySelector(".pfp");
       const userPfp = auth.currentUser.photoURL || defaultpfp;
+      const userName = document.querySelector('.username');
       pfp.style.backgroundImage = `url(${userPfp})`;
       pfp.classList.add("bg-cover");
+      userName.textContent = auth.currentUser.displayName;
 
     }
   });
@@ -66,6 +71,7 @@ function setAuth(val){
         userHeader.classList.add('flex');
         fullMain.classList.remove("blur-sm");
         fullMain.removeEventListener("click",handler);
+        // writeData();
 
     }
         
@@ -76,6 +82,8 @@ function setAuth(val){
         signInDiv.classList.add('flex');
         fullMain.classList.add("blur-sm");
         fullMain.addEventListener("click",handler,true);
+        const userName = document.querySelector('.username');
+        userName.textContent = "";
 
     }
 }

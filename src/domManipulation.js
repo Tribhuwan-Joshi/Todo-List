@@ -44,7 +44,7 @@ function addProject() {
 
         localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
         projectAddForm.classList.add("hidden");
-        // console.log(allProjectArr);
+        
         renderProjects(allProjectArr);
 
         let nodelist = document.querySelectorAll(".projects-container .proj-index");
