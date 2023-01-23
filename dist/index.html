@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full overflow-auto">
 
 <head>
     <meta charset="UTF-8" />
@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todoer</title>
     <link rel="icon" href="" />
-<script defer src="bundle.js?d3e1cf9f3b18339c9d7d"></script></head>
+<script defer src="bundle.js?d92822a4ddfbd0de1355"></script></head>
 
-<body class=" h-full">
-    <div class="bg-red-200 h-full w-full absolute flex flex-col justify-center gap-4 items-center"> <h1 class="text-2xl font-semibold">Please Sign In To Continue</h1> <button class="sign-in border bg-gray-200 active:bg-gray-300  border-black  text-2xl rounded-md  p-2">Sign In</button>
+<body class=" h-full overflow-auto">
+    <div class="sign-in-div bg-blue-100 z-50 bg-opacity-80 h-full overflow-auto w-full fixed flex flex-col justify-center gap-4 items-center"> <h1 class="text-2xl font-semibold">Please Sign In To Continue</h1> <button class="sign-in border bg-gray-200 active:bg-gray-300  border-black  text-2xl rounded-md  p-2">Sign In</button>
+    </div>
     <!-- header -->
-    <div class="full-main hidden grid-cols-[1fr_6fr] grid-rows-[1fr_10fr]">
+    <div class="full-main h-full overflow-auto w-full grid grid-cols-[1fr_6fr] grid-rows-[1fr_10fr]">
      <div
         class="header row-span-1 col-start-1 col-end-3 bg-[#EEE3CB] border-b border-b-black flex px-4 justify-center items-center">
         <div class="github-wrapper  gap-2 hidden md:flex absolute left-[6%] "> <a
@@ -26,7 +27,7 @@
             Todoer
             <span class="mt-2 font-light text-base">~ one step at a time</span>
         </div>
-        <div class="user-data flex gap-8 fixed right-10">
+        <div class="user-data  hidden gap-8 absolute right-10">
             <div class="w-[30px] h-[30px] rounded-[100%] bg-gray-600"></div>
             <button class="sign-out border bg-gray-200 active:bg-gray-300  border-black text-sm px-1">Sign Out</button>
             
@@ -75,10 +76,10 @@ rounded-md hover:cursor-pointer py-1">Gym</div>
             class="delete-all bg-red-500 mt-auto  mb-[10px] w-fit py-1 px-4 text-lg mx-auto tracking-wide hover:bg-red-600 active:bg-red-500 rounded-md text-white">
             Delete All
         </button>
-    </div> -->
+    </div> 
 
     <!-- main -->
-     <div class="main col-start-2 row-start-2 h-[93vh] flex justify-center items-center bg-blue-200 ">
+     <div class="main col-start-2 h-full  row-start-2  flex justify-center items-center bg-blue-200 ">
         <div
             class="content w-[85%] border border-black bg-gray-200 rounded-md p-3 h-[90%] flex flex-col gap-4 overflow-auto">
             <div class="top-bar flex page-name justify-between">

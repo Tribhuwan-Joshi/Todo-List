@@ -78,7 +78,7 @@ function updatePagesEffect() {
 
     const pages = document.querySelectorAll('[class*="-index"]');
     const projectDeleteBtns = document.querySelectorAll(".pro-delete");
-    console.log("called me");
+  
     pages.forEach((page) => {
         page.addEventListener("click", () => {
             pages.forEach((page) => {
@@ -179,7 +179,7 @@ function getProjectByName(currentPageName) {
 
 function renderTask(currentPageName) {
 
-    console.log(currentPageName, " inside renderTasks");
+   
     //clear allproject div
     let tempArr = getTaskArr(currentPageName);
     // console.log("CurrentPage inside renderTask",currentPageName);
@@ -285,7 +285,7 @@ function deleteAllProjects() {
     localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
     renderProjects(allProjectArr);
     const homePage = document.querySelector(".home-index");
-    console.log(homePage);
+
     homePage.click();
 }
 

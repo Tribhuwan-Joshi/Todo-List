@@ -33,6 +33,7 @@
     "webpack-dev-server": "^4.10.0"
   },
   "dependencies": {
-    "firebase": "^9.16.0"
+    "firebase": "^9.16.0",
+    "universal-cookie": "^4.0.4"
   }
 }

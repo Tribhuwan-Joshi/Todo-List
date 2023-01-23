@@ -1,21 +1,56 @@
 /* Imports css */
-const fm= document.querySelector(".full-main");
-fm.classList.add('grid');
-// fm.classList.remove("hidden")
 
 import "./style.css";
 import { renderTask, deleteAllProjects, allProjectArr, currentPageName, getProjectByName } from "./domManipulation.js";
 
+// link Icon
+import Icon from "./imgs/bgImg.jpg";
+const linkIcon = document.querySelector('link[rel="icon"');
+linkIcon.href = Icon;
+
+
+// Auth logic 
+
+import Cookies from "universal-cookie/cjs/Cookies";
+const cookies = new Cookies();
+
+
+
+import { signInWithGoogle } from "./Auth";
+const signIn = document.querySelector(".sign-in");
+signIn.addEventListener("click",signInWithGoogle);
+
+let isAuth = cookies.get('auth-token') || false;
+setAuth(isAuth);
+function setAuth(val){
+    isAuth=val;
+    const signInDiv = document.querySelector(".sign-in-div");
+    const userHeader = document.querySelector(".user-data");
+    if(isAuth){
+
+        signInDiv.classList.add('hidden');
+        signInDiv.classList.remove('flex');
+        userHeader.classList.remove('hidden');
+        userHeader.classList.add('flex');
+    }
+    else{
+        signInDiv.classList.remove('hidden');
+        userHeader.classList.add('hidden');
+        userHeader.classList.remove('flex');
+        signInDiv.classList.add('flex');
+    }
+}
+function getAuth(){
+    return isAuth;
+}
 
 
 
 // import classes
 import { Task } from './task'
 
-// link Icon
-import Icon from "./imgs/icon.png";
-const linkIcon = document.querySelector('link[rel="icon"]');
-linkIcon.href = Icon;
+
+
 
 /* header style and object logic */
 
@@ -96,6 +131,8 @@ const projects = document.querySelector(".all-projects");
 
 let formClose = true;
 // keep track of any editForm or AddForm is opened
+
+// firebase sign -in 
 
 
 function showAddForm() {
@@ -401,7 +438,7 @@ deleteAllBtn.addEventListener("click", () => {
 })
 
 renderTask(currentPageName);
-export { activateCheckboxes, activateEditBtns, allTasks }
+export { activateCheckboxes, activateEditBtns, allTasks,setAuth}
 
 
 
