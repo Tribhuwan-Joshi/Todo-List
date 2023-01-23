@@ -54,7 +54,10 @@ function setAuth(val){
     const signInDiv = document.querySelector(".sign-in-div");
     const userHeader = document.querySelector(".user-data");
     const fullMain = document.querySelector(".full-main");
-
+    function handler(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
     if(isAuth){
 
         signInDiv.classList.add('hidden');
@@ -62,9 +65,8 @@ function setAuth(val){
         userHeader.classList.remove('hidden');
         userHeader.classList.add('flex');
         fullMain.classList.remove("blur-sm");
-        // const userPfp = auth.currentUser.photoURL || defaultpfp;
-   
-        // pfp.classList.add(`bg-[${userPfp}]`,'bg-cover');
+        fullMain.removeEventListener("click",handler);
+
     }
         
     else{
@@ -72,7 +74,8 @@ function setAuth(val){
         userHeader.classList.add('hidden');
         userHeader.classList.remove('flex');
         signInDiv.classList.add('flex');
-        fullMain.classList.add("blur-sm")
+        fullMain.classList.add("blur-sm");
+        fullMain.addEventListener("click",handler,true);
 
     }
 }
@@ -99,6 +102,7 @@ signOutBtn.addEventListener("click",()=>{
 }
     
 );
+
 
 
 
