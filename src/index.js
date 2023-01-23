@@ -20,29 +20,55 @@ import { signInWithGoogle } from "./Auth";
 const signIn = document.querySelector(".sign-in");
 signIn.addEventListener("click",signInWithGoogle);
 
+
+
 let isAuth = cookies.get('auth-token') || false;
 setAuth(isAuth);
 function setAuth(val){
     isAuth=val;
     const signInDiv = document.querySelector(".sign-in-div");
     const userHeader = document.querySelector(".user-data");
+    const fullMain = document.querySelector(".full-main");
     if(isAuth){
 
         signInDiv.classList.add('hidden');
         signInDiv.classList.remove('flex');
         userHeader.classList.remove('hidden');
         userHeader.classList.add('flex');
+        fullMain.classList.remove("blur-sm")
     }
     else{
         signInDiv.classList.remove('hidden');
         userHeader.classList.add('hidden');
         userHeader.classList.remove('flex');
         signInDiv.classList.add('flex');
+        fullMain.classList.add("blur-sm")
+
     }
 }
 function getAuth(){
     return isAuth;
 }
+
+// sign Out 
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase-config";
+const signUserOut  = (async()=>{
+    await signOut(auth);
+    cookies.remove("auth-token");
+    setAuth(false);
+})
+
+
+
+const signOutBtn = document.querySelector('.sign-out');
+signOutBtn.addEventListener("click",()=>{
+    
+        let shouldSignOut = confirm("Are you sure to sign Out ? ");
+        if(shouldSignOut)  signUserOut();
+}
+    
+);
 
 
 
@@ -277,7 +303,7 @@ function activateCheckboxes() {
                 else {
                     getProjectByName(currentPageName).projectTasksList = tempArr;
                     localStorage.setItem("allProjectArr", JSON.stringify(allProjectArr));
-                    console.log(allProjectArr);
+                    
                 }
                 
 
